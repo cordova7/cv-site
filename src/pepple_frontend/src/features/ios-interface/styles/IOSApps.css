@@ -1,0 +1,701 @@
+/* General iOS app styles */
+.ios-app-container {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--ios-system-background);
+  color: var(--ios-text-primary);
+  overflow: hidden;
+}
+
+/* ===== CALCULATOR APP STYLES ===== */
+.calculator-container {
+  background-color: #000;
+  color: #fff;
+  padding: 8px;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.calculator-display {
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-end;
+  height: 120px;
+  margin-bottom: 10px;
+  padding: 0 16px;
+}
+
+.calculator-display-text {
+  font-size: 76px;
+  font-weight: 200;
+  text-align: right;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.calculator-keypad {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.calculator-row {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+
+.calculator-key {
+  width: 75px;
+  height: 75px;
+  border-radius: 50%;
+  border: none;
+  font-size: 28px;
+  font-weight: 400;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: opacity 0.1s;
+}
+
+.calculator-key:active {
+  opacity: 0.7;
+}
+
+.function-key {
+  background-color: #a5a5a5;
+  color: #000;
+}
+
+.number-key {
+  background-color: #333;
+  color: #fff;
+}
+
+.operation-key {
+  background-color: #f1a33c;
+  color: #fff;
+}
+
+.operation-key.active {
+  background-color: #fff;
+  color: #f1a33c;
+}
+
+.zero-key {
+  width: 168px;
+  border-radius: 37.5px;
+  justify-content: flex-start;
+  padding-left: 28px;
+}
+
+/* ===== WEATHER APP STYLES ===== */
+.weather-container {
+  color: #fff;
+  min-height: 100%;
+  padding: 20px;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.weather-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.weather-location {
+  font-size: 32px;
+  font-weight: 300;
+  text-align: center;
+  margin: 0;
+  flex: 1;
+}
+
+.weather-search-button,
+.weather-units-button {
+  background: none;
+  border: none;
+  color: #fff;
+  font-size: 20px;
+  padding: 8px;
+  cursor: pointer;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+.weather-search-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.7);
+  z-index: 100;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding-top: 60px;
+}
+
+.weather-search-input-container {
+  display: flex;
+  width: 90%;
+  max-width: 500px;
+  background-color: rgba(255, 255, 255, 0.2);
+  border-radius: 10px;
+  padding: 5px;
+}
+
+.weather-search-input {
+  flex: 1;
+  background: transparent;
+  border: none;
+  color: #fff;
+  font-size: 18px;
+  padding: 10px 15px;
+  outline: none;
+}
+
+.weather-search-input::placeholder {
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.weather-search-cancel {
+  background: transparent;
+  border: none;
+  color: #fff;
+  padding: 0 15px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.weather-main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.weather-current {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.weather-condition-icon {
+  font-size: 80px;
+  margin-bottom: 5px;
+}
+
+.weather-temp {
+  font-size: 80px;
+  font-weight: 200;
+  line-height: 1;
+  margin-bottom: 10px;
+}
+
+.weather-condition {
+  font-size: 24px;
+  margin-bottom: 5px;
+}
+
+.weather-feels-like {
+  font-size: 16px;
+  opacity: 0.9;
+}
+
+.weather-details {
+  display: flex;
+  justify-content: space-around;
+  width: 100%;
+  max-width: 500px;
+  margin: 0 auto 30px;
+  background-color: rgba(255, 255, 255, 0.1);
+  border-radius: 15px;
+  padding: 15px 10px;
+}
+
+.weather-detail-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0 10px;
+}
+
+.weather-detail-label {
+  font-size: 14px;
+  opacity: 0.7;
+  margin-bottom: 5px;
+}
+
+.weather-detail-value {
+  font-size: 18px;
+  font-weight: 500;
+}
+
+.weather-forecast {
+  width: 100%;
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+.weather-forecast-title {
+  font-size: 20px;
+  font-weight: 600;
+  margin-bottom: 15px;
+}
+
+.weather-forecast-list {
+  background-color: rgba(255, 255, 255, 0.1);
+  border-radius: 15px;
+  overflow: hidden;
+}
+
+.weather-forecast-item {
+  display: flex;
+  align-items: center;
+  padding: 15px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.weather-forecast-item:last-child {
+  border-bottom: none;
+}
+
+.weather-forecast-day {
+  flex: 1;
+  font-size: 16px;
+}
+
+.weather-forecast-icon {
+  font-size: 24px;
+  margin: 0 20px;
+}
+
+.weather-forecast-high {
+  font-size: 16px;
+  font-weight: 500;
+  width: 50px;
+  text-align: right;
+}
+
+.weather-forecast-low {
+  font-size: 16px;
+  opacity: 0.7;
+  width: 50px;
+  text-align: right;
+  margin-left: 10px;
+}
+
+.weather-error {
+  background-color: rgba(255, 0, 0, 0.2);
+  padding: 15px;
+  border-radius: 10px;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.weather-error button {
+  background-color: rgba(255, 255, 255, 0.2);
+  color: #fff;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 5px;
+  margin-top: 10px;
+  cursor: pointer;
+}
+
+/* ===== CLOCK APP STYLES ===== */
+.ios-clock-container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+}
+
+/* Clock Tabs Navigation */
+.ios-clock-tabs {
+  display: flex;
+  justify-content: space-around;
+  background-color: var(--ios-secondary-background);
+  border-top: 1px solid var(--ios-separator);
+  padding: 10px 0;
+  padding-bottom: max(10px, env(safe-area-inset-bottom, 10px));
+}
+
+.ios-clock-tab {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: none;
+  border: none;
+  color: var(--ios-text-secondary);
+  padding: 8px;
+  flex: 1;
+  cursor: pointer;
+}
+
+.ios-clock-tab.active {
+  color: var(--ios-blue);
+}
+
+.ios-clock-tab-icon {
+  font-size: 22px;
+  margin-bottom: 4px;
+}
+
+.ios-clock-tab-label {
+  font-size: 11px;
+}
+
+.ios-clock-content {
+  flex: 1;
+  overflow-y: auto;
+  padding: 20px;
+}
+
+/* World Clock Tab */
+.ios-clock-worldclock {
+  display: flex;
+  flex-direction: column;
+}
+
+.ios-clock-current-time {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 30px;
+}
+
+.ios-clock-local {
+  font-size: 16px;
+  color: var(--ios-text-secondary);
+}
+
+.ios-clock-time {
+  font-size: 36px;
+  font-weight: 300;
+}
+
+.ios-clock-worldclocks {
+  display: flex;
+  flex-direction: column;
+}
+
+.ios-clock-worldclock-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 0;
+  border-bottom: 1px solid var(--ios-separator);
+}
+
+.ios-clock-city {
+  font-size: 18px;
+  font-weight: 500;
+}
+
+.ios-clock-timezone-time {
+  font-size: 22px;
+  font-weight: 400;
+}
+
+.ios-clock-timezone-diff {
+  font-size: 14px;
+  color: var(--ios-text-secondary);
+}
+
+/* Alarm Tab */
+.ios-clock-alarms {
+  display: flex;
+  flex-direction: column;
+}
+
+.ios-clock-alarm-item {
+  display: flex;
+  padding: 15px 0;
+  border-bottom: 1px solid var(--ios-separator);
+}
+
+.ios-clock-alarm-toggle {
+  margin-right: 15px;
+}
+
+.ios-switch {
+  position: relative;
+  display: inline-block;
+  width: 50px;
+  height: 30px;
+}
+
+.ios-switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.ios-switch-slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  border-radius: 34px;
+  transition: .4s;
+}
+
+.ios-switch-slider:before {
+  position: absolute;
+  content: "";
+  height: 26px;
+  width: 26px;
+  left: 2px;
+  bottom: 2px;
+  background-color: white;
+  border-radius: 50%;
+  transition: .4s;
+}
+
+input:checked + .ios-switch-slider {
+  background-color: var(--ios-green);
+}
+
+input:checked + .ios-switch-slider:before {
+  transform: translateX(20px);
+}
+
+.ios-clock-alarm-details {
+  flex: 1;
+}
+
+.ios-clock-alarm-time {
+  font-size: 24px;
+  font-weight: 400;
+}
+
+.ios-clock-alarm-label {
+  font-size: 16px;
+}
+
+.ios-clock-alarm-days {
+  font-size: 14px;
+  color: var(--ios-text-secondary);
+  margin-top: 5px;
+}
+
+.ios-clock-add-button {
+  background-color: transparent;
+  color: var(--ios-blue);
+  border: none;
+  padding: 15px;
+  font-size: 16px;
+  text-align: left;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+/* Stopwatch Tab */
+.ios-clock-stopwatch {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px 0;
+}
+
+.ios-clock-stopwatch-display {
+  width: 250px;
+  height: 250px;
+  border-radius: 50%;
+  background-color: rgba(0, 0, 0, 0.05);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 30px;
+}
+
+.dark-mode .ios-clock-stopwatch-display {
+  background-color: rgba(255, 255, 255, 0.05);
+}
+
+.ios-clock-stopwatch-time {
+  font-size: 40px;
+  font-weight: 200;
+  font-variant-numeric: tabular-nums;
+}
+
+.ios-clock-stopwatch-controls {
+  display: flex;
+  justify-content: space-around;
+  width: 100%;
+  max-width: 300px;
+  margin-bottom: 30px;
+}
+
+.ios-clock-stopwatch-button {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  border: none;
+  font-size: 16px;
+  color: #fff;
+  cursor: pointer;
+}
+
+.ios-button-success {
+  background-color: var(--ios-green);
+}
+
+.ios-button-danger {
+  background-color: #FF3B30;
+}
+
+.ios-button-secondary {
+  background-color: #8E8E93;
+}
+
+.ios-clock-stopwatch-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.ios-clock-stopwatch-laps {
+  width: 100%;
+  max-width: 300px;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.ios-clock-stopwatch-lap {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 15px;
+  border-bottom: 1px solid var(--ios-separator);
+}
+
+.ios-clock-lap-number {
+  color: var(--ios-text-secondary);
+}
+
+.ios-clock-lap-time {
+  font-variant-numeric: tabular-nums;
+}
+
+/* Timer Tab */
+.ios-clock-timer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100%;
+}
+
+.ios-clock-timer-setup {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 40px 0;
+}
+
+.ios-clock-timer-picker {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 40px;
+}
+
+.ios-clock-timer-picker-column {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 0 15px;
+}
+
+.ios-clock-timer-select {
+  font-size: 40px;
+  font-weight: 200;
+  width: 80px;
+  text-align: center;
+  background-color: transparent;
+  border: none;
+  color: var(--ios-text-primary);
+  -webkit-appearance: none;
+  margin-bottom: 10px;
+  padding: 5px 10px;
+}
+
+.ios-clock-timer-picker-column label {
+  font-size: 14px;
+  color: var(--ios-text-secondary);
+}
+
+.ios-clock-timer-start-button {
+  background-color: var(--ios-green);
+  color: #fff;
+  border: none;
+  padding: 12px 40px;
+  font-size: 18px;
+  border-radius: 30px;
+  cursor: pointer;
+}
+
+.ios-clock-timer-start-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.ios-clock-timer-running {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  padding: 40px 0;
+}
+
+.ios-clock-timer-display {
+  width: 250px;
+  height: 250px;
+  border-radius: 50%;
+  background-color: rgba(0, 0, 0, 0.05);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 40px;
+}
+
+.dark-mode .ios-clock-timer-display {
+  background-color: rgba(255, 255, 255, 0.05);
+}
+
+.ios-clock-timer-time {
+  font-size: 48px;
+  font-weight: 200;
+  font-variant-numeric: tabular-nums;
+}
+
+.ios-clock-timer-controls {
+  display: flex;
+  justify-content: space-around;
+  width: 100%;
+  max-width: 300px;
+}
+
+.ios-clock-timer-button {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  border: none;
+  font-size: 16px;
+  color: #fff;
+  cursor: pointer;
+  margin: 0 10px;
+} 

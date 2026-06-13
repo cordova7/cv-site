@@ -1,0 +1,866 @@
+.ipad-frame-container {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #000;
+  overflow: visible;
+  position: relative;
+  touch-action: none;
+  /* Add a subtle transition for the container too */
+  transition: background-color 0.3s ease;
+}
+
+/* Add a subtle glow around the iPad to make it stand out against background */
+.ipad-frame-container::before {
+  display: none;
+}
+
+.ipad-frame {
+  --frame-tx: 0px;
+  --frame-ty: 0px;
+  --frame-rx: 0deg;
+  --frame-ry: 0deg;
+  --frame-rz: 0deg;
+  --frame-static-rotate: 0deg;
+  --frame-static-scale: 1;
+  --frame-scale: 1;
+  --glare-x: 50%;
+  --glare-y: 35%;
+  --glare-opacity: 0;
+  --ipad-frame-radius: 28px;
+  --ipad-bezel-radius: 24px;
+  --ipad-screen-radius: 18px;
+
+  position: relative;
+  width: min(100vw, calc(1068px + 22px)); /* Responsive width with max size */
+  height: min(100vh, calc(778px + 22px)); /* Responsive height with max size */
+  max-width: calc(100vw - 20px); /* Ensure padding on small screens */
+  max-height: calc(100vh - 20px); /* Ensure padding on small screens */
+  background-color: #000;
+  border-radius: var(--ipad-frame-radius);
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  /* Solid gradient background without transparency */
+  background: #000;
+  border: 1px solid #222;
+  position: relative;
+  z-index: 1;
+  /* Add smooth transitions for the drag effect */
+  transform-origin: center center;
+  will-change: transform;
+  cursor: grab;
+  transition: box-shadow 0.3s ease, transform 0.3s ease;
+  transform: perspective(1400px)
+    translate3d(var(--frame-tx), var(--frame-ty), 0)
+    rotateX(var(--frame-rx))
+    rotateY(var(--frame-ry))
+    rotateZ(var(--frame-static-rotate))
+    rotateZ(var(--frame-rz))
+    scale(var(--frame-static-scale))
+    scale(var(--frame-scale));
+}
+
+/* Enhanced desktop styles */
+.ipad-frame[data-desktop="true"] {
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.8);
+  border: 1px solid #333;
+}
+
+/* Style for when the frame is being dragged */
+.ipad-frame[data-dragging="true"] {
+  cursor: grabbing;
+  box-shadow: 0 35px 60px rgba(0, 0, 0, 0.6), 0 10px 15px rgba(0, 0, 0, 0.25);
+}
+
+/* Add parallax effect for the screen content while dragging */
+.ipad-frame[data-dragging="true"] .ipad-frame-screen {
+  transform: scale(0.995);
+  transition: transform 0.3s ease;
+}
+
+.ipad-frame-bezel {
+  position: relative;
+  width: calc(1080px + 20px);
+  height: calc(819px + 20px);
+  background-color: #111;
+  border-radius: var(--ipad-bezel-radius);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  border: 1px solid rgba(0, 0, 0, 0.8);
+}
+
+.ipad-frame-engraving {
+  position: absolute;
+  top: 22px;
+  right: 110px;
+  left: auto;
+  transform: none;
+  z-index: 5;
+  pointer-events: auto;
+  user-select: text;
+  white-space: nowrap;
+  max-width: min(460px, calc(100% - 180px));
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-family: ui-serif, "Bodoni MT", "Didot", "Times New Roman", serif;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.22em;
+  text-indent: 0.22em;
+  text-rendering: geometricPrecision;
+  -webkit-font-smoothing: antialiased;
+  font-variant-ligatures: none;
+  color: rgba(255, 255, 255, 0.16);
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.10), 0 -1px 0 rgba(0, 0, 0, 0.90), 0 10px 26px rgba(0, 0, 0, 0.35);
+  opacity: 1;
+  background: transparent;
+  border: 0;
+  padding: 0;
+  margin: 0;
+  line-height: 1;
+  cursor: copy;
+}
+
+.ipad-frame-engraving:hover {
+  color: rgba(255, 255, 255, 0.22);
+}
+
+.ipad-frame-engraving:focus-visible {
+  outline: 2px solid rgba(255, 255, 255, 0.22);
+  outline-offset: 8px;
+  border-radius: 999px;
+}
+
+.liquid-toast-layer {
+  position: absolute;
+  top: 54px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 12;
+  pointer-events: none;
+}
+
+.liquid-toast {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 14px;
+  border-radius: 999px;
+  color: rgba(255, 255, 255, 0.92);
+  font-size: 12px;
+  letter-spacing: 0.02em;
+  background: rgba(10, 10, 14, 0.46);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.55);
+  opacity: 0;
+  transform: translate3d(0, -10px, 0) scale(0.96);
+  transition: opacity 220ms ease, transform 260ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.liquid-toast::before,
+.liquid-toast::after {
+  content: "";
+  position: absolute;
+  inset: -18px -22px;
+  border-radius: 999px;
+  pointer-events: none;
+  opacity: 0.7;
+}
+
+.liquid-toast::before {
+  background: radial-gradient(60% 90% at 25% 20%, rgba(255, 255, 255, 0.16), rgba(255, 255, 255, 0) 60%),
+    radial-gradient(55% 80% at 80% 80%, rgba(56, 189, 248, 0.12), rgba(56, 189, 248, 0) 55%),
+    radial-gradient(55% 80% at 15% 85%, rgba(34, 197, 94, 0.10), rgba(34, 197, 94, 0) 55%);
+  filter: blur(10px);
+  mix-blend-mode: screen;
+  animation: liquid-toast-drift 3.6s ease-in-out infinite;
+}
+
+.liquid-toast::after {
+  background: radial-gradient(60% 70% at 40% 20%, rgba(255, 255, 255, 0.10), rgba(255, 255, 255, 0) 55%);
+  filter: blur(14px);
+  opacity: 0.55;
+  animation: liquid-toast-drift 4.8s ease-in-out infinite reverse;
+}
+
+.liquid-toast[data-state="open"] {
+  opacity: 1;
+  transform: translate3d(0, 0, 0) scale(1);
+}
+
+.liquid-toast[data-state="closed"] {
+  opacity: 0;
+  transform: translate3d(0, -10px, 0) scale(0.98);
+}
+
+@keyframes liquid-toast-drift {
+  0% {
+    transform: translate3d(-8px, 0, 0) scale(1);
+  }
+  50% {
+    transform: translate3d(8px, 2px, 0) scale(1.02);
+  }
+  100% {
+    transform: translate3d(-8px, 0, 0) scale(1);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .liquid-toast,
+  .liquid-toast::before,
+  .liquid-toast::after {
+    animation: none !important;
+    transition: none !important;
+  }
+}
+
+.ipad-frame-glare {
+  position: absolute;
+  inset: 0;
+  border-radius: var(--ipad-bezel-radius);
+  pointer-events: none;
+  z-index: 4;
+  opacity: var(--glare-opacity, 0);
+  transition: opacity 200ms ease;
+  background: radial-gradient(
+    circle at var(--glare-x, 50%) var(--glare-y, 35%),
+    rgba(255, 255, 255, 0.22) 0%,
+    rgba(255, 255, 255, 0) 60%
+  );
+  mix-blend-mode: screen;
+}
+
+.ipad-frame-screen {
+  width: min(100%, 1068px); /* Responsive width with max size */
+  height: min(100%, 778px); /* Responsive height with max size */
+  max-width: 100%;
+  max-height: 100%;
+  background-color: transparent;
+  border-radius: var(--ipad-screen-radius);
+  overflow: hidden;
+  position: relative;
+  z-index: 1;
+  box-shadow: inset 0 0 1px rgba(0, 0, 0, 0.2);
+  /* Add properties for smooth content transitions */
+  will-change: transform;
+  transform-origin: center center;
+  transition: transform 0.2s ease;
+  /* Explicitly set cursor to default to override any grab cursor inheritance */
+  cursor: default;
+}
+
+/* Desktop-specific frame elements */
+.ipad-frame[data-desktop="true"] .ipad-frame-bezel {
+  background: linear-gradient(135deg, #1a1a1a 0%, #111 100%);
+  border: 1px solid #333;
+}
+
+.ipad-frame[data-desktop="true"] .ipad-bevel-effect {
+  background: linear-gradient(135deg, 
+    rgba(255, 255, 255, 0.02) 0%, 
+    rgba(255, 255, 255, 0) 50%, 
+    rgba(0, 0, 0, 0.03) 100%
+  );
+}
+
+/* Make sure the black border frame doesn't show grab cursor when hovering on the screen */
+.ipad-frame-screen:hover {
+  cursor: default;
+}
+
+/* Add styling for when the app itself is being dragged */
+.ipad-frame-screen[data-content-dragging="true"] {
+  box-shadow: inset 0 0 2px rgba(0, 0, 0, 0.3);
+  cursor: default;
+  /* Explicitly ensure no transform is applied to the screen itself */
+  transform: none !important;
+}
+
+/* Make sure the background doesn't move when dragging content */
+.ipad-frame-screen[data-content-dragging="true"] > .app {
+  /* Keep the background in place while home elements are being dragged */
+  transform: none !important;
+}
+
+/* Make sure the home elements inside the frame behave properly during dragging */
+.ipad-frame-screen[data-content-dragging="true"] .ios-home-screen,
+.ipad-frame-screen[data-content-dragging="true"] .ios-home-content,
+.ipad-frame-screen[data-content-dragging="true"] .ios-app-grid,
+.ipad-frame-screen[data-content-dragging="true"] .ios-dock,
+.ipad-frame-screen[data-content-dragging="true"] .ios-page-dots {
+  /* Enhanced effects for a more pronounced drag feeling */
+  filter: brightness(0.95);
+  transition: filter 0.25s ease, transform 0.25s ease;
+  will-change: transform;
+}
+
+/* Add shadow effect to home screen elements while dragging for more depth */
+.ipad-frame-screen[data-content-dragging="true"] .ios-home-screen {
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+/* Give the icons a slight lift effect during drag */
+.ipad-frame-screen[data-content-dragging="true"] .ios-app-icon {
+  transform: translateZ(5px);
+  transition: transform 0.25s ease;
+}
+
+/* Volume buttons */
+.ipad-volume-up,
+.ipad-volume-down {
+  position: absolute;
+  left: -2px;
+  width: 1px;
+  height: 15px;
+  background-color: #333;
+  border-radius: 1px;
+  box-shadow: inset -1px 0 1px rgba(255, 255, 255, 0.05);
+}
+
+.ipad-volume-up {
+  top: 100px;
+}
+
+.ipad-volume-down {
+  top: 125px;
+}
+
+/* Power button */
+.ipad-power-button {
+  position: absolute;
+  top: 20px;
+  right: -2px;
+  width: 1px;
+  height: 15px;
+  background-color: #333;
+  border-radius: 1px;
+  box-shadow: inset 1px 0 1px rgba(255, 255, 255, 0.05);
+}
+
+/* Add iPad bevel effect */
+.ipad-bevel-effect {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border-radius: var(--ipad-frame-radius);
+  box-shadow: inset 0 0 2px rgba(255, 255, 255, 0.03);
+  pointer-events: none;
+  background: linear-gradient(135deg, 
+    rgba(255, 255, 255, 0.01) 0%, 
+    rgba(255, 255, 255, 0) 50%, 
+    rgba(0, 0, 0, 0.02) 100%
+  );
+  z-index: 10;
+}
+
+/* When dragging, darken the background slightly */
+.ipad-frame-container.dragging {
+  background-color: #000000;
+}
+
+/* Improved responsive design with more precise media queries */
+
+/* 4K screens and larger monitors */
+@media (min-width: 2560px) {
+  .ipad-frame {
+    --frame-static-scale: 1.2;
+  }
+}
+
+/* Standard desktop screens (1440p) */
+@media (min-width: 1440px) and (max-width: 2559px) {
+  .ipad-frame {
+    --frame-static-scale: 1;
+  }
+}
+
+/* Standard desktop screens (1080p) */
+@media (min-width: 1080px) and (max-width: 1439px) {
+  .ipad-frame {
+    --frame-static-scale: 0.9;
+  }
+}
+
+/* Smaller desktop screens and tablets (720p) */
+@media (min-width: 720px) and (max-width: 1079px) {
+  .ipad-frame {
+    --frame-static-scale: 0.7;
+  }
+}
+
+/* Even smaller screens */
+@media (min-width: 320px) and (max-width: 719px) {
+  .ipad-frame {
+    --frame-static-scale: 0.5;
+  }
+}
+
+/* Height-based scaling for better fit on short screens */
+@media (min-height: 1200px) {
+  .ipad-frame {
+    --frame-static-scale: 1.1;
+  }
+}
+
+@media (min-height: 800px) and (max-height: 1199px) {
+  /* Default scaling is fine for this range */
+}
+
+@media (min-height: 600px) and (max-height: 799px) {
+  .ipad-frame {
+    --frame-static-scale: 0.7;
+  }
+}
+
+@media (max-height: 599px) {
+  .ipad-frame {
+    --frame-static-scale: 0.5;
+  }
+}
+
+/* Combine width and height for more precise scaling */
+@media (max-width: 1200px) and (max-height: 800px) {
+  .ipad-frame {
+    --frame-static-scale: 0.65;
+  }
+}
+
+@media (max-width: 1000px) and (max-height: 700px) {
+  .ipad-frame {
+    --frame-static-scale: 0.55;
+  }
+}
+
+/* Adjust for different aspect ratios */
+@media (min-aspect-ratio: 21/9) {
+  .ipad-frame {
+    --frame-static-scale: 0.9;
+  }
+}
+
+@media (min-aspect-ratio: 16/9) and (max-aspect-ratio: 21/9) {
+  /* Default scaling is fine for this range */
+}
+
+@media (min-aspect-ratio: 4/3) and (max-aspect-ratio: 16/9) {
+  /* Default scaling is fine for this range */
+}
+
+@media (max-aspect-ratio: 4/3) {
+  .ipad-frame {
+    --frame-static-scale: 0.7;
+  }
+}
+
+/* Ensure the best viewing experience regardless of device */
+@media (orientation: portrait) and (max-width: 768px) {
+  .ipad-frame {
+    --frame-static-scale: 0.4;
+    --frame-static-rotate: 90deg;
+  }
+}
+
+/* Ensure iPad frame is always visible */
+@media screen and (max-width: 1200px), screen and (max-height: 900px) {
+  .ipad-frame-container {
+    padding: 20px;
+  }
+}
+
+/* Prevent frame from being too large on specific screen sizes */
+@media screen and (min-width: 1000px) and (max-width: 1100px) and (min-height: 700px) and (max-height: 800px) {
+  .ipad-frame {
+    --frame-static-scale: 0.75;
+  }
+}
+
+/* Specific adjustments for common laptop screen sizes */
+@media screen and (width: 1366px) and (height: 768px) {
+  .ipad-frame {
+    --frame-static-scale: 0.7;
+  }
+}
+
+@media screen and (width: 1280px) and (height: 800px) {
+  .ipad-frame {
+    --frame-static-scale: 0.7;
+  }
+}
+
+@media screen and (width: 1440px) and (height: 900px) {
+  .ipad-frame {
+    --frame-static-scale: 0.8;
+  }
+}
+
+@media screen and (width: 1920px) and (height: 1080px) {
+  .ipad-frame {
+    --frame-static-scale: 0.9;
+  }
+}
+
+/* Desktop-specific adjustments for content within the frame */
+@media (min-width: 1024px) {
+  .ipad-frame[data-dragging="true"] {
+    box-shadow: 0 45px 80px rgba(0, 0, 0, 0.7), 0 15px 25px rgba(0, 0, 0, 0.3);
+  }
+  
+  .ipad-frame-screen .app {
+    width: 100%;
+    height: 100%;
+    /* Ensure content is always centered */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+}
+
+/* Fullscreen Toggle Button - Inside iPad Frame */
+.ipad-fullscreen-toggle-wrapper {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: var(--z-index-toggle-buttons);
+}
+
+.ipad-fullscreen-toggle {
+  width: 36px;
+  height: 36px;
+  background: rgba(255, 255, 255, 0.12);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 12px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  color: rgba(255, 255, 255, 0.85);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+  position: relative;
+  overflow: hidden;
+}
+
+.ipad-fullscreen-toggle:hover {
+  background: rgba(255, 255, 255, 0.2);
+  border-color: rgba(255, 255, 255, 0.3);
+  transform: scale(1.05);
+  color: rgba(255, 255, 255, 1);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+}
+
+.ipad-fullscreen-toggle:active {
+  transform: scale(0.95);
+  background: rgba(255, 255, 255, 0.25);
+  color: rgba(255, 255, 255, 0.9);
+}
+
+/* Expand Icon */
+.expand-icon {
+  width: 24px;
+  height: 24px;
+  position: relative;
+}
+
+.expand-arrows {
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+
+.arrow {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  border: 3px solid currentColor;
+}
+
+.arrow.top-left {
+  top: 0;
+  left: 0;
+  border-right: none;
+  border-bottom: none;
+  border-top-left-radius: 2px;
+}
+
+.arrow.top-right {
+  top: 0;
+  right: 0;
+  border-left: none;
+  border-bottom: none;
+  border-top-right-radius: 2px;
+}
+
+.arrow.bottom-left {
+  bottom: 0;
+  left: 0;
+  border-right: none;
+  border-top: none;
+  border-bottom-left-radius: 2px;
+}
+
+.arrow.bottom-right {
+  bottom: 0;
+  right: 0;
+  border-left: none;
+  border-top: none;
+  border-bottom-right-radius: 2px;
+}
+
+/* Fullscreen Toggle Button - In Fullscreen Mode */
+.fullscreen-toggle-wrapper {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: var(--z-index-toggle-buttons);
+}
+
+.fullscreen-toggle-button {
+  width: 36px;
+  height: 36px;
+  background: rgba(255, 255, 255, 0.12);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 12px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  color: rgba(255, 255, 255, 0.85);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+}
+
+.fullscreen-toggle-button:hover {
+  background: rgba(255, 255, 255, 0.2);
+  border-color: rgba(255, 255, 255, 0.3);
+  transform: scale(1.05);
+  color: rgba(255, 255, 255, 1);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+}
+
+.fullscreen-toggle-button:active {
+  transform: scale(0.95);
+  background: rgba(255, 255, 255, 0.25);
+  color: rgba(255, 255, 255, 0.9);
+}
+
+/* iPad Icon */
+.ipad-icon {
+  width: 16px;
+  height: 12px;
+  position: relative;
+  border: 1.5px solid currentColor;
+  border-radius: 2px;
+  background: transparent;
+}
+
+.ipad-screen {
+  position: absolute;
+  top: 1px;
+  left: 1px;
+  right: 1px;
+  bottom: 1px;
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 0.5px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 1024px) {
+  .ipad-fullscreen-toggle {
+    display: none;
+  }
+}
+
+@media (max-width: 768px) {
+  .fullscreen-toggle-wrapper {
+    display: none;
+  }
+}
+
+/* Mobile-specific responsive adjustments */
+@media (max-width: 768px) {
+  .ipad-frame {
+    width: calc(100vw - 10px);
+    height: calc(100vh - 10px);
+    max-width: 100%;
+    max-height: 100%;
+    border-radius: 0;
+    --frame-static-scale: 1;
+  }
+
+  .ipad-frame-screen {
+    width: 100%;
+    height: 100%;
+  }
+}
+
+/* Additional mobile-specific adjustments */
+@media (max-width: 480px) {
+  .ipad-frame {
+    width: 100vw;
+    height: 100vh;
+    border-radius: 0;
+    box-shadow: none;
+    --frame-static-scale: 1;
+  }
+
+  .ipad-frame-bezel {
+    width: 100%;
+    height: 100%;
+    border-radius: 0;
+  }
+}
+
+/* Portrait orientation adjustments */
+@media (orientation: portrait) and (max-width: 768px) {
+  .ipad-frame {
+    --frame-static-scale: 0.9;
+    --frame-static-rotate: 0deg; /* Keep normal orientation on mobile */
+  }
+}
+
+/* Landscape orientation adjustments */
+@media (orientation: landscape) and (max-height: 500px) {
+  .ipad-frame {
+    --frame-static-scale: 0.8;
+  }
+}
+
+/* Fullscreen container - normal desktop website layout */
+.fullscreen-container {
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background: transparent;
+  z-index: 1;
+  overflow: auto;
+}
+
+.fullscreen-container .app {
+  width: 100% !important;
+  height: 100% !important;
+  max-width: none !important;
+  max-height: none !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  transform: none !important;
+  position: relative !important;
+}
+
+/* Remove any iPad frame styling in fullscreen */
+body:not(.ipad-frame-mode) .ipad-frame,
+body:not(.ipad-frame-mode) .ipad-frame-container,
+body:not(.ipad-frame-mode) .ipad-frame-bezel,
+body:not(.ipad-frame-mode) .ipad-frame-screen,
+body:not(.ipad-frame-mode) .ipad-volume-up,
+body:not(.ipad-frame-mode) .ipad-volume-down,
+body:not(.ipad-frame-mode) .ipad-power-button,
+body:not(.ipad-frame-mode) .ipad-bevel-effect {
+  display: none !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+}
+
+/* Ensure fullscreen content has no constraints - Higher specificity override */
+body:not(.ipad-frame-mode) .app,
+body:not(.ipad-frame-mode) .ipad-frame-screen .app {
+  width: 100vw !important;
+  height: 100vh !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  transform: none !important;
+  max-width: none !important;
+  max-height: none !important;
+  overflow: auto !important;
+  border: none !important;
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  z-index: var(--z-index-content) !important;
+  /* Preserve background image and color from inline styles */
+  background-size: cover !important;
+  background-position: center !important;
+}
+
+/* Hide notch/pseudo-elements in desktop fullscreen mode */
+body:not(.ipad-frame-mode) .app:before,
+body:not(.ipad-frame-mode) .app:after {
+  display: none !important;
+}
+
+/* Override all iPad frame constraints in fullscreen */
+body:not(.ipad-frame-mode) .ios-app-grid,
+body:not(.ipad-frame-mode) .ios-home-content {
+  max-width: none !important;
+  width: 100% !important;
+}
+
+/* Force override mobile media query constraints in fullscreen mode */
+@media (max-width: 768px) {
+  body:not(.ipad-frame-mode) .app {
+    max-width: none !important;
+    width: 100vw !important;
+    height: 100vh !important;
+    border: none !important;
+    border-radius: 0 !important;
+    margin: 0 !important;
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+  }
+  
+  /* Hide notch in desktop fullscreen mode */
+  body:not(.ipad-frame-mode) .app:before,
+  body:not(.ipad-frame-mode) .app:after {
+    display: none !important;
+  }
+}
+
+/* Ensure proper transitions between modes */
+.ipad-frame-container {
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+body:not(.ipad-frame-mode) .ipad-frame-container {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+/* Fullscreen mode class - overrides ALL iPad frame constraints */
+.app.fullscreen-mode {
+  width: 100vw !important;
+  height: 100vh !important;
+  max-width: none !important;
+  max-height: none !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  transform: none !important;
+  overflow: auto !important;
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  z-index: 1 !important;
+}
+
+.app.fullscreen-mode * {
+  max-width: none !important;
+  max-height: none !important;
+} 

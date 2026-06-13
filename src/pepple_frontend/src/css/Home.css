@@ -1,0 +1,345 @@
+.ios-home-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 20px 10px; /* Reduced right padding */
+  min-height: calc(100vh - 120px); /* Account for dock height */
+  overflow-y: auto;
+  width: 100%;
+}
+
+.ios-app-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+  width: 100%;
+  max-width: 400px;
+  margin: 0;
+  padding: 0 10px 0 0; /* Reduced right padding, removed left padding */
+  justify-items: start; /* Align items to start instead of center */
+}
+
+@media (min-width: 768px) {
+  .ios-app-grid {
+    grid-template-columns: repeat(6, 1fr);
+    gap: 40px 35px;
+    max-width: 850px;
+    padding: 30px;
+    justify-items: center;
+  }
+  
+  .ios-home-content {
+    padding: 40px 20px;
+  }
+}
+
+@media (max-width: 767px) {
+  .ios-app-grid {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 15px;
+    padding: 0 5px 0 0; /* Reduced right padding for mobile */
+    max-width: 100%;
+  }
+
+  .ios-app-icon {
+    width: 70px;
+    height: 85px;
+  }
+
+  .ios-app-icon-img {
+    width: 50px;
+    height: 50px;
+  }
+
+  .ios-app-icon-name {
+    font-size: 11px;
+  }
+}
+
+.ios-app-icon {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  width: 80px;
+  height: 95px;
+  margin: 0;
+  cursor: pointer;
+  transition: transform 0.2s ease, filter 0.2s ease;
+  position: relative;
+}
+
+.ios-home-screen {
+  position: relative;
+}
+
+.ios-home-toast-layer {
+  position: absolute;
+  top: 18px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 50;
+  pointer-events: none;
+}
+
+.liquid-toast {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 14px;
+  border-radius: 999px;
+  color: rgba(255, 255, 255, 0.92);
+  font-size: 12px;
+  letter-spacing: 0.02em;
+  background: rgba(10, 10, 14, 0.46);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.55);
+  opacity: 0;
+  transform: translate3d(0, -10px, 0) scale(0.96);
+  transition: opacity 220ms ease, transform 260ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.liquid-toast::before,
+.liquid-toast::after {
+  content: "";
+  position: absolute;
+  inset: -18px -22px;
+  border-radius: 999px;
+  pointer-events: none;
+  opacity: 0.7;
+}
+
+.liquid-toast::before {
+  background: radial-gradient(60% 90% at 25% 20%, rgba(255, 255, 255, 0.16), rgba(255, 255, 255, 0) 60%),
+    radial-gradient(55% 80% at 80% 80%, rgba(56, 189, 248, 0.12), rgba(56, 189, 248, 0) 55%),
+    radial-gradient(55% 80% at 15% 85%, rgba(34, 197, 94, 0.10), rgba(34, 197, 94, 0) 55%);
+  filter: blur(10px);
+  mix-blend-mode: screen;
+  animation: liquid-toast-drift 3.6s ease-in-out infinite;
+}
+
+.liquid-toast::after {
+  background: radial-gradient(60% 70% at 40% 20%, rgba(255, 255, 255, 0.10), rgba(255, 255, 255, 0) 55%);
+  filter: blur(14px);
+  opacity: 0.55;
+  animation: liquid-toast-drift 4.8s ease-in-out infinite reverse;
+}
+
+.liquid-toast[data-state="open"] {
+  opacity: 1;
+  transform: translate3d(0, 0, 0) scale(1);
+}
+
+.liquid-toast[data-state="closed"] {
+  opacity: 0;
+  transform: translate3d(0, -10px, 0) scale(0.98);
+}
+
+@keyframes liquid-toast-drift {
+  0% {
+    transform: translate3d(-8px, 0, 0) scale(1);
+  }
+  50% {
+    transform: translate3d(8px, 2px, 0) scale(1.02);
+  }
+  100% {
+    transform: translate3d(-8px, 0, 0) scale(1);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .liquid-toast,
+  .liquid-toast::before,
+  .liquid-toast::after {
+    animation: none !important;
+    transition: none !important;
+  }
+}
+
+/* Add hover effect only for desktop */
+@media (min-width: 768px) {
+  .ios-app-icon:not(.ios-dock .ios-app-icon):hover {
+    transform: scale(1.1);
+    filter: brightness(1.1);
+  }
+}
+
+.ios-app-icon-img {
+  width: 60px;
+  height: 60px;
+  border-radius: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  position: relative;
+  margin-bottom: 5px;
+}
+
+.ios-app-icon[data-locked="true"] {
+  cursor: not-allowed;
+  filter: saturate(0.85);
+}
+
+.ios-icon-liquid-lock {
+  position: absolute;
+  inset: 0;
+  border-radius: 15px;
+  overflow: hidden;
+  z-index: 2;
+  pointer-events: none;
+  background: rgba(0, 0, 0, 0.14);
+  backdrop-filter: blur(2px);
+  -webkit-backdrop-filter: blur(2px);
+}
+
+.ios-icon-liquid-lock::before,
+.ios-icon-liquid-lock::after {
+  content: "";
+  position: absolute;
+  inset: -22px;
+  border-radius: 999px;
+  opacity: 0.85;
+  filter: blur(12px);
+  mix-blend-mode: screen;
+}
+
+.ios-icon-liquid-lock::before {
+  background: radial-gradient(45% 65% at 20% 30%, rgba(255, 255, 255, 0.20), rgba(255, 255, 255, 0) 60%),
+    radial-gradient(55% 80% at 70% 75%, rgba(56, 189, 248, 0.22), rgba(56, 189, 248, 0) 62%),
+    radial-gradient(60% 85% at 15% 85%, rgba(34, 197, 94, 0.14), rgba(34, 197, 94, 0) 60%);
+  animation: ios-liquid-lock-drift 3.2s ease-in-out infinite;
+}
+
+.ios-icon-liquid-lock::after {
+  background: radial-gradient(55% 70% at 55% 30%, rgba(255, 255, 255, 0.14), rgba(255, 255, 255, 0) 62%),
+    radial-gradient(60% 75% at 35% 90%, rgba(168, 85, 247, 0.14), rgba(168, 85, 247, 0) 62%);
+  opacity: 0.65;
+  animation: ios-liquid-lock-drift 4.6s ease-in-out infinite reverse;
+}
+
+.ios-icon-liquid-lock__label {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  text-indent: 0.14em;
+  color: rgba(255, 255, 255, 0.82);
+  text-shadow: 0 1px 6px rgba(0, 0, 0, 0.55);
+}
+
+@keyframes ios-liquid-lock-drift {
+  0% {
+    transform: translate3d(-10px, -4px, 0) scale(1.03);
+  }
+  50% {
+    transform: translate3d(10px, 6px, 0) scale(1.05);
+  }
+  100% {
+    transform: translate3d(-10px, -4px, 0) scale(1.03);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ios-icon-liquid-lock::before,
+  .ios-icon-liquid-lock::after {
+    animation: none !important;
+  }
+}
+
+.ios-app-icon-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Specific styling for Switch Background icon */
+[data-app-id="switch-background"] .ios-app-icon-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Slightly zoom specific app icons */
+[data-app-id="camera"] .ios-app-icon-img img,
+[data-app-id="messages"] .ios-app-icon-img img,
+[data-app-id="crypto"] .ios-app-icon-img img {
+  width: 115%;
+  height: 115%;
+  object-fit: contain;
+  transform: scale(1.1);
+}
+
+[data-app-id="notes"] .ios-app-icon-img img {
+  width: 100%;
+  height: 100%;
+  border-radius: 0;
+  object-fit: cover;
+  transform: scale(1.35);
+}
+
+/* Add hover effect for the icon image on desktop */
+@media (min-width: 768px) {
+  .ios-app-icon:not(.ios-dock .ios-app-icon):hover .ios-app-icon-img {
+    transform: scale(1.05);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  }
+}
+
+.ios-app-icon-name {
+  font-size: 12px;
+  color: var(--text-color);
+  text-align: center;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  line-height: 1.2;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+  white-space: pre-wrap;
+}
+
+.app-name-word {
+  display: block;
+}
+
+/* Add hover effect for the app name on desktop */
+@media (min-width: 768px) {
+  .ios-app-icon:not(.ios-dock .ios-app-icon):hover .ios-app-icon-name {
+    color: var(--accent-color);
+    background: rgba(0, 0, 0, 0.7);
+  }
+} 
+
+/* Staking app specific styles */
+.staking-icon-wrapper {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.staking-icon-wrapper img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+/* Make sure the icon has the correct border radius to match other icons */
+.ios-app-icon[data-app-id="staking"] .ios-app-icon-img {
+  border-radius: 12px;
+  overflow: hidden;
+} 

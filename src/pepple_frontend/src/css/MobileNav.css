@@ -1,0 +1,47 @@
+/* Mobile navigation styles */
+@media (max-width: 768px) {
+  .section-navigation {
+    height: auto;
+    padding: 10px 0;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+  }
+
+  .section-tabs {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 8px;
+    padding: 0 10px;
+  }
+
+  .section-tab {
+    min-width: auto;
+    padding: 8px 12px;
+    font-size: 12px;
+    flex: 1;
+    max-width: calc(50% - 4px);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .tab-icon {
+    font-size: 16px;
+    margin-bottom: 0;
+  }
+
+  .tab-label {
+    font-size: 12px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .sections-container {
+    margin-top: 80px; /* Account for the navigation height */
+    height: calc(100vh - 80px);
+  }
+} 

@@ -1,0 +1,89 @@
+/* Theme Utility Classes */
+
+/* These styles will be applied when the theme is toggled programmatically */
+.frogchan-theme .theme-select {
+  background-color: var(--frogchan-background-alt);
+  border: 1px solid var(--frogchan-primary-light);
+  color: var(--frogchan-text);
+}
+
+/* Dark mode styles */
+.dark-mode .theme-utility {
+  background-color: #333333;
+  border-color: #555555;
+  color: #ffffff;
+}
+
+.dark-mode.frogchan-theme .theme-utility {
+  background-color: var(--frogchan-secondary);
+  border-color: var(--frogchan-primary-dark);
+  color: var(--frogchan-text-light);
+}
+
+/* Theme Switcher Styles */
+.theme-switcher {
+  margin: 0 10px;
+  display: flex;
+  align-items: center;
+}
+
+.theme-select {
+  background-color: #ffffff;
+  border: 1px solid #cccccc;
+  border-radius: 4px;
+  padding: 4px 8px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.theme-select:hover {
+  border-color: #999999;
+}
+
+.theme-select:focus {
+  outline: none;
+  border-color: #4aca7a;
+  box-shadow: 0 0 0 2px rgba(74, 202, 122, 0.2);
+}
+
+/* Frogchan theme styling for the selector */
+.frogchan-theme .theme-select {
+  background-color: var(--frogchan-background-alt);
+  border: 1px solid var(--frogchan-primary-light);
+  color: var(--frogchan-text);
+}
+
+.frogchan-theme .theme-select:hover {
+  border-color: var(--frogchan-primary);
+}
+
+.frogchan-theme .theme-select:focus {
+  border-color: var(--frogchan-primary);
+  box-shadow: 0 0 0 2px rgba(74, 202, 122, 0.2);
+}
+
+/* Dark mode styles */
+.dark-mode .theme-select {
+  background-color: #333333;
+  border-color: #555555;
+  color: #ffffff;
+}
+
+.dark-mode.frogchan-theme .theme-select {
+  background-color: var(--frogchan-secondary);
+  border-color: var(--frogchan-primary-dark);
+  color: var(--frogchan-text-light);
+}
+
+/* Mobile responsive adjustments */
+@media (max-width: 768px) {
+  .theme-switcher {
+    margin: 0 5px;
+  }
+  
+  .theme-select {
+    font-size: 12px;
+    padding: 3px 6px;
+  }
+} 

@@ -1,0 +1,150 @@
+/* StakingApp.css */
+
+/* Main staking container - respects iOS app container constraints */
+.beta-staking-app {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  /* Remove fixed heights that conflict with App.css */
+}
+
+.beta-staking-app .staking-content {
+  width: 100%;
+  max-width: 100%;
+  padding: 15px 15px 100px 15px; /* Added more bottom padding for home indicator area */
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  flex: 1;
+  overflow-y: auto; /* Enable vertical scrolling */
+  -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
+}
+
+.staking-section {
+  background-color: rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+  padding: 15px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  width: 100%;
+  box-sizing: border-box; /* Include padding and border in width */
+}
+
+.dark-mode .staking-section {
+  background-color: rgba(0, 0, 0, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.staking-section h2, .staking-section h3 {
+  margin-top: 0;
+  margin-bottom: 10px;
+  color: var(--ios-primary-text-color); /* Use theme color */
+  border-bottom: 1px solid rgba(128, 128, 128, 0.3);
+  padding-bottom: 5px;
+}
+
+.staking-section ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.staking-section li {
+  margin-bottom: 8px;
+  color: var(--ios-secondary-text-color); /* Use theme color */
+}
+
+.staking-section input[type="number"] {
+  width: 100%; /* Full width */
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  background-color: #fff;
+  color: #333;
+  box-sizing: border-box; /* Include padding and border in width */
+}
+
+.dark-mode .staking-section input[type="number"] {
+  background-color: #333;
+  color: #eee;
+  border-color: #555;
+}
+
+.staking-section button {
+  padding: 10px 15px;
+  border: none;
+  border-radius: 5px;
+  background-color: #007aff; /* iOS blue */
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  width: 100%;
+  box-sizing: border-box; /* Include padding and border in width */
+}
+
+.staking-section button:hover:not(:disabled) {
+  background-color: #005ecb;
+}
+
+.staking-section button:disabled {
+  background-color: #8e8e93; /* iOS disabled gray */
+  cursor: not-allowed;
+}
+
+.principal-display {
+  font-size: 0.8em;
+  color: var(--ios-secondary-text-color);
+  margin-left: auto; /* Push to the right */
+  padding-right: 10px;
+}
+
+.error-message {
+  color: red;
+  text-align: center;
+  margin-top: 10px;
+  font-weight: bold;
+}
+
+/* Media Queries for iOS app dimensions */
+@media (max-width: 414px) {
+  /* iPhone Plus width and below */
+  .beta-staking-app .staking-content {
+    padding: 10px 10px 80px 10px; /* Smaller padding on smaller screens */
+    gap: 15px; /* Less gap between elements */
+  }
+  
+  .staking-section {
+    padding: 12px;
+    border-radius: 8px;
+  }
+  
+  .staking-section input[type="number"],
+  .staking-section button {
+    padding: 8px 12px;
+    font-size: 14px;
+  }
+}
+
+/* Make sure iOS home indicator and tab bar don't block content */
+@media (max-height: 700px) {
+  .beta-staking-app .staking-content {
+    padding-bottom: 120px; /* Extra padding at bottom for short screens */
+  }
+}
+
+/* Fix for iPad frame mode */
+@media (min-width: 768px) {
+  .beta-staking-app {
+    /* For iPad frames, ensure content fills correctly */
+    max-width: calc(100% - 30px);
+    margin: 0 auto;
+  }
+  
+  .beta-staking-app .staking-content {
+    max-width: 650px; /* Cap content width on larger screens */
+    margin: 0 auto;
+  }
+} 

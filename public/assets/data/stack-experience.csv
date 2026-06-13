@@ -1,0 +1,7 @@
+area,technologies,practical_use,confidence,evidence
+Frontend,React|Next.js|Vite,Build responsive app UI and component-driven screens,High,Finder + app interface in this repo
+Styling,CSS|SCSS|Responsive Design,Design and tune glassmorphism layouts and mobile breakpoints,High,Finder and iOS-style UI styles
+Data Handling,PapaParse|CSV,Parse and present CSV datasets with sorting and adaptive table views,High,CSV viewer in Finder
+Backend Integration,Next.js API Routes|Supabase,Fetch and shape token project data for app features,Medium,API routes and data endpoints in repo
+Web3/IC,@dfinity/agent|@dfinity/auth-client|ICRC,Integrate wallet auth and ICP ecosystem flows,Medium,Wallet and dfinity dependencies features
+Tooling,Node.js|npm|Vite|Next.js,Run builds manage workspaces and ship frontend changes,High,workspace scripts and build setup

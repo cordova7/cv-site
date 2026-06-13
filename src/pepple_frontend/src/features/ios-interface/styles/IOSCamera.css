@@ -1,0 +1,391 @@
+/* iOS Camera Styles */
+.ios-camera {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--ios-system-background);
+  color: var(--ios-text-primary);
+  overflow: hidden;
+  position: relative;
+}
+
+/* Camera Preview */
+.camera-preview {
+  flex: 1;
+  background-color: #000;
+  position: relative;
+  overflow: hidden;
+}
+
+.camera-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  pointer-events: none;
+}
+
+.camera-grid {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.grid-line {
+  position: absolute;
+  background-color: rgba(255, 255, 255, 0.3);
+}
+
+.grid-line.horizontal {
+  width: 100%;
+  height: 1px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.grid-line.vertical {
+  width: 1px;
+  height: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.grid-line.diagonal-left {
+  width: 1px;
+  height: 100%;
+  left: 50%;
+  top: 0;
+  transform: rotate(45deg);
+  transform-origin: center;
+}
+
+.grid-line.diagonal-right {
+  width: 1px;
+  height: 100%;
+  left: 50%;
+  top: 0;
+  transform: rotate(-45deg);
+  transform-origin: center;
+}
+
+/* Camera Controls */
+.camera-controls {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 16px;
+  pointer-events: none;
+}
+
+/* Top Controls */
+.camera-top-controls {
+  display: flex;
+  justify-content: space-between;
+  padding: 8px;
+  pointer-events: auto;
+}
+
+.top-controls-left,
+.top-controls-right {
+  display: flex;
+  gap: 8px;
+}
+
+.control-button {
+  width: 40px;
+  height: 40px;
+  border-radius: 20px;
+  background-color: rgba(0, 0, 0, 0.5);
+  border: none;
+  color: white;
+  font-size: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  backdrop-filter: var(--blur-medium);
+  -webkit-backdrop-filter: var(--blur-medium);
+}
+
+.control-button.active {
+  background-color: var(--ios-blue);
+}
+
+/* Bottom Controls */
+.camera-bottom-controls {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px;
+  pointer-events: auto;
+}
+
+/* Mode Selector */
+.camera-modes {
+  display: flex;
+  gap: 8px;
+}
+
+.mode-button {
+  padding: 6px 12px;
+  border-radius: 8px;
+  border: none;
+  background-color: rgba(0, 0, 0, 0.5);
+  color: white;
+  font-size: 15px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  backdrop-filter: var(--blur-medium);
+  -webkit-backdrop-filter: var(--blur-medium);
+}
+
+.mode-button.active {
+  background-color: var(--ios-blue);
+}
+
+/* Shutter Button */
+.shutter-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.shutter-button {
+  width: 72px;
+  height: 72px;
+  border-radius: 36px;
+  background-color: white;
+  border: none;
+  position: relative;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.shutter-button.recording {
+  background-color: #FF3B30;
+  animation: pulse 1.5s infinite;
+}
+
+.shutter-ring {
+  position: absolute;
+  top: -4px;
+  left: -4px;
+  right: -4px;
+  bottom: -4px;
+  border: 2px solid white;
+  border-radius: 38px;
+  transition: all 0.2s ease;
+}
+
+.shutter-button:active .shutter-ring {
+  transform: scale(0.95);
+}
+
+/* Gallery Preview */
+.gallery-preview {
+  width: 60px;
+  height: 60px;
+  border-radius: 8px;
+  overflow: hidden;
+  border: 2px solid white;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.gallery-preview img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.gallery-preview:active {
+  transform: scale(0.95);
+  opacity: 0.8;
+}
+
+/* Photo Preview Modal */
+.photo-preview-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: var(--ios-system-background);
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  animation: fadeIn 0.3s ease-out;
+}
+
+.preview-header {
+  display: flex;
+  justify-content: space-between;
+  padding: 16px;
+  background-color: var(--ios-secondary-system-background);
+  backdrop-filter: var(--blur-medium);
+  -webkit-backdrop-filter: var(--blur-medium);
+}
+
+.close-button,
+.retake-button {
+  background: none;
+  border: none;
+  font-size: 17px;
+  color: var(--ios-blue);
+  padding: 0;
+  cursor: pointer;
+}
+
+.preview-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.preview-content img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.preview-actions {
+  padding: 16px;
+  background-color: var(--ios-secondary-system-background);
+  backdrop-filter: var(--blur-medium);
+  -webkit-backdrop-filter: var(--blur-medium);
+}
+
+.action-button {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px;
+  border-radius: 8px;
+  border: none;
+  background-color: var(--ios-tertiary-system-background);
+  color: var(--ios-text-primary);
+  font-size: 17px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  margin-bottom: 8px;
+}
+
+.action-button:last-child {
+  margin-bottom: 0;
+}
+
+.action-button:active {
+  transform: scale(0.98);
+  opacity: 0.8;
+}
+
+.action-icon {
+  font-size: 20px;
+}
+
+/* Animations */
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Mobile Optimizations */
+@media (max-width: 375px) {
+  .mode-button {
+    padding: 4px 8px;
+    font-size: 13px;
+  }
+
+  .shutter-button {
+    width: 64px;
+    height: 64px;
+  }
+
+  .gallery-preview {
+    width: 50px;
+    height: 50px;
+  }
+
+  .action-button {
+    font-size: 15px;
+    padding: 10px;
+  }
+}
+
+/* Timer Overlay */
+.timer-overlay {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+}
+
+.timer-circle {
+  width: 120px;
+  height: 120px;
+  border-radius: 60px;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: pulse 1s infinite;
+}
+
+.timer-text {
+  color: white;
+  font-size: 48px;
+  font-weight: 600;
+}
+
+/* HDR Button */
+.hdr-button {
+  font-size: 15px;
+  font-weight: 500;
+}
+
+.hdr-button.active {
+  background-color: var(--ios-blue);
+}
+
+/* Timer Button */
+.timer-button {
+  font-size: 15px;
+  font-weight: 500;
+}
+
+.timer-button.active {
+  background-color: var(--ios-blue);
+} 

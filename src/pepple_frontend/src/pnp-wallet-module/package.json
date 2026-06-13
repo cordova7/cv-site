@@ -1,0 +1,53 @@
+{
+  "name": "pnp-wallet-module",
+  "version": "1.0.0",
+  "description": "Modular PNP wallet system for Internet Computer with multi-wallet support and dynamic token import",
+  "main": "index.js",
+  "keywords": [
+    "internet-computer",
+    "icp",
+    "wallet",
+    "plug-n-play",
+    "pnp",
+    "icrc",
+    "react",
+    "context"
+  ],
+  "author": "Pepple Team",
+  "license": "MIT",
+  "peerDependencies": {
+    "react": ">=16.8.0",
+    "react-dom": ">=16.8.0"
+  },
+  "dependencies": {
+    "@windoge98/plug-n-play": "^0.0.51",
+    "@dfinity/principal": "^0.20.0",
+    "@dfinity/agent": "^0.20.0",
+    "@dfinity/auth-client": "^0.20.0",
+    "prop-types": "^15.8.1"
+  },
+  "exports": {
+    ".": {
+      "import": "./index.js",
+      "require": "./index.js"
+    }
+  },
+  "files": [
+    "index.js",
+    "context/",
+    "core/",
+    "utils/",
+    "hooks/",
+    "components/",
+    "types/",
+    "README.md"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/pepple-team/pnp-wallet-module"
+  },
+  "bugs": {
+    "url": "https://github.com/pepple-team/pnp-wallet-module/issues"
+  },
+  "homepage": "https://github.com/pepple-team/pnp-wallet-module#readme"
+}

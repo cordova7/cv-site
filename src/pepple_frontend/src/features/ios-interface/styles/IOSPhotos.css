@@ -1,0 +1,648 @@
+/* iOS Photos App Styling */
+:root {
+  --ios-bg-color: #f2f2f7;
+  --ios-text-color: #000;
+  --ios-accent-color: #2da337;
+  --ios-caption-bg: rgba(255, 255, 255, 0.85);
+  --ios-border-radius: 10px;
+  --ios-border-color: rgba(0, 0, 0, 0.1);
+  --ios-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  --ios-transition: all 0.3s ease;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --ios-bg-color: #1c1c1e;
+    --ios-text-color: #fff;
+    --ios-accent-color: #2da337;
+    --ios-caption-bg: rgba(30, 30, 30, 0.85);
+    --ios-border-color: rgba(255, 255, 255, 0.15);
+    --ios-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  }
+}
+
+.ios-photos {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  background-color: var(--ios-bg-color);
+  color: var(--ios-text-color);
+  min-height: 100vh;
+  padding: 1rem;
+  box-sizing: border-box;
+  max-width: 1200px;
+  margin: 0 auto;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.floating-widget-memes .ios-photos {
+  background: transparent;
+  max-width: 100%;
+  min-height: 100%;
+  padding: 0.5rem;
+}
+
+.floating-widget-memes .photos-header {
+  padding: 10px 12px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(15, 23, 42, 0.45);
+  border-radius: 12px;
+  margin-bottom: 8px;
+  backdrop-filter: saturate(180%) blur(18px);
+}
+
+.floating-widget-memes .photos-header h1 {
+  font-size: 1.1rem;
+}
+
+.floating-widget-memes .photos-pagination {
+  font-size: 0.75rem;
+  opacity: 0.7;
+}
+
+.floating-widget-memes .photos-grid {
+  grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+  gap: 8px;
+  padding: 8px;
+  padding-bottom: 60px;
+  border-radius: 14px;
+  background: rgba(15, 23, 42, 0.28);
+  backdrop-filter: saturate(170%) blur(16px);
+}
+
+.floating-widget-memes .photo-caption {
+  font-size: 0.7rem;
+  padding: 0.35rem;
+}
+
+/* Header Styles */
+.photos-header {
+  padding: 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid var(--ios-separator);
+}
+
+.photos-header h1 {
+  font-size: 1.75rem;
+  font-weight: 600;
+  margin: 0;
+}
+
+.photos-pagination {
+  font-size: 0.9rem;
+  color: var(--ios-text-color);
+  opacity: 0.8;
+}
+
+/* Photos Grid */
+.photos-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 12px;
+  padding: 16px;
+  overflow-y: auto;
+  flex: 1;
+  -webkit-overflow-scrolling: touch;
+  padding-bottom: 120px; /* Increased padding to ensure bottom photos are accessible */
+}
+
+/* Photo Items */
+.photo-item {
+  position: relative;
+  aspect-ratio: 1;
+  overflow: hidden;
+  border-radius: 8px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  transition: transform 0.2s;
+  display: flex;
+  flex-direction: column;
+}
+
+.photo-item:active {
+  transform: scale(0.97);
+}
+
+.photo-item img {
+  width: 100%;
+  height: calc(100% - 2rem); /* Reserve space for caption */
+  object-fit: cover;
+  display: block;
+}
+
+/* Caption - Always visible with enhanced accessibility */
+.photo-caption {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: var(--ios-caption-bg);
+  padding: 0.5rem;
+  font-size: 0.85rem;
+  font-weight: 500;
+  text-align: center;
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+  border-top: 1px solid var(--ios-border-color);
+  /* Ensure text is readable */
+  color: var(--ios-text-color);
+  z-index: 5;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Loading and Empty States */
+.loading-indicator, .no-photos {
+  grid-column: 1 / -1;
+  text-align: center;
+  padding: 2rem;
+  color: var(--ios-text-color);
+  opacity: 0.7;
+  font-size: 1rem;
+}
+
+/* Pagination Controls */
+.pagination-controls {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  margin: 1rem 0;
+}
+
+.page-button {
+  background-color: var(--ios-accent-color);
+  color: white;
+  border: none;
+  border-radius: 20px;
+  padding: 0.5rem 1rem;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: var(--ios-transition);
+}
+
+.page-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.page-button:hover:not(:disabled), 
+.page-button:focus:not(:disabled) {
+  background-color: #0056b3;
+  transform: translateY(-2px);
+}
+
+.page-button:focus {
+  outline: 2px solid #0056b3;
+  outline-offset: 2px;
+}
+
+.page-indicator {
+  font-size: 0.9rem;
+  color: var(--ios-text-color);
+}
+
+/* Photo Detail Modal */
+.photo-detail-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.9);
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  animation: fadeIn 0.3s ease;
+  overflow-y: auto;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.photo-detail-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  background-color: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+.photo-detail-title {
+  color: white;
+  font-size: 1.1rem;
+  font-weight: 500;
+  text-align: center;
+  flex-grow: 1;
+}
+
+.photo-detail-link {
+  color: #0b0b0f;
+  font-size: 0.85rem;
+  text-decoration: none;
+  padding: 0.35rem 0.75rem;
+  border-radius: 999px;
+  background: linear-gradient(140deg, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.7));
+  border: 1px solid rgba(255, 255, 255, 0.65);
+  margin-right: 0.35rem;
+  font-weight: 600;
+}
+
+.photo-detail-link:hover,
+.photo-detail-link:focus {
+  background: linear-gradient(140deg, rgba(255, 255, 255, 1), rgba(255, 255, 255, 0.8));
+  color: #0b0b0f;
+}
+
+.close-button, .nav-button {
+  background: rgba(255, 255, 255, 0.2);
+  border: none;
+  color: white;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 1.2rem;
+  margin: 0 0.5rem;
+  transition: var(--ios-transition);
+}
+
+.close-button:hover, 
+.nav-button:hover,
+.close-button:focus,
+.nav-button:focus {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+.close-button:focus,
+.nav-button:focus {
+  outline: 2px solid white;
+}
+
+.nav-button:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+.photo-detail-content {
+  flex: 0 0 auto;
+  height: 240px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.photo-detail-content img {
+  width: 100%;
+  height: 100%;
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  transition: transform 0.3s ease;
+}
+
+.photo-detail-content img.zoomed {
+  transform: scale(1.5);
+  cursor: zoom-out;
+}
+
+.photo-count {
+  position: absolute;
+  bottom: 1rem;
+  right: 1rem;
+  background: rgba(0, 0, 0, 0.6);
+  color: white;
+  padding: 0.3rem 0.6rem;
+  border-radius: 15px;
+  font-size: 0.85rem;
+}
+
+.photo-controls {
+  padding: 1rem;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+.photo-detail-caption {
+  color: white;
+  font-size: 1rem;
+  font-weight: 500;
+}
+
+.control-hint {
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 0.8rem;
+}
+
+/* Enhanced Responsive Styles */
+@media (max-width: 1024px) {
+  .photos-grid {
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  }
+}
+
+@media (max-width: 768px) {
+  .photos-grid {
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    gap: 0.5rem;
+  }
+  
+  .photo-caption {
+    padding: 0.4rem;
+    font-size: 0.75rem;
+  }
+  
+  .photo-detail-header,
+  .photo-controls {
+    padding: 0.75rem;
+  }
+  
+  .close-button, .nav-button {
+    width: 32px;
+    height: 32px;
+    font-size: 1rem;
+  }
+  
+  .control-hint {
+    display: none;
+  }
+}
+
+@media (max-width: 600px) {
+  .photos-grid {
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  }
+}
+
+@media (max-width: 480px) {
+  .ios-photos {
+    padding: 0.5rem;
+  }
+  
+  .photos-grid {
+    grid-template-columns: repeat(auto-fill, minmax(105px, 1fr));
+    gap: 0.4rem;
+  }
+  
+  .photos-header h1 {
+    font-size: 1.5rem;
+  }
+  
+  .pagination-controls {
+    gap: 0.5rem;
+  }
+  
+  .page-button {
+    padding: 0.4rem 0.8rem;
+    font-size: 0.8rem;
+  }
+  
+  .photo-detail-title,
+  .photo-detail-caption {
+    font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 360px) {
+  .photos-grid {
+    grid-template-columns: repeat(auto-fill, minmax(95px, 1fr));
+    gap: 0.3rem;
+  }
+  
+  .photo-caption {
+    font-size: 0.7rem;
+    padding: 0.3rem;
+  }
+}
+
+/* Accessibility Focus Styles */
+:focus {
+  outline: 2px solid var(--ios-accent-color);
+  outline-offset: 2px;
+}
+
+/* Apply additional bottom padding on mobile devices */
+@media (max-width: 767px) {
+  .photos-grid {
+    padding-bottom: max(120px, calc(env(safe-area-inset-bottom) + 150px)) !important;
+  }
+}
+
+/* Ensure the app container has proper bottom space for content to be reached */
+@media (max-width: 767px) {
+  .ios-photos {
+    padding-bottom: env(safe-area-inset-bottom, 0);
+  }
+}
+
+/* Image loading states */
+.photo-item.loading {
+  background-color: rgba(0, 0, 0, 0.05);
+}
+
+.photo-item .hidden {
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.photo-item .visible {
+  opacity: 1;
+  transition: opacity 0.3s ease;
+}
+
+/* Loading indicator */
+.photo-loading-indicator {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 24px;
+  height: 24px;
+  border: 2px solid rgba(0, 0, 0, 0.1);
+  border-top-color: var(--ios-blue, #007aff);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: translate(-50%, -50%) rotate(360deg);
+  }
+}
+
+.dark-mode .photo-loading-indicator {
+  border-color: rgba(255, 255, 255, 0.1);
+  border-top-color: #2da337;
+}
+
+/* Optimize image loading */
+.photos-grid img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.2s ease;
+  will-change: transform;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}
+
+/* Improve photo modal performance */
+.photo-detail-modal img {
+  width: 100%;
+  height: 100%;
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  transition: transform 0.3s ease;
+  will-change: transform;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}
+
+.photo-detail-modal img.zoomed {
+  transform: scale(1.5);
+  cursor: zoom-out;
+} 
+
+.photo-code-block {
+  padding: 1rem;
+  background: rgba(0, 0, 0, 0.6);
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
+  color: #f7f7f7;
+}
+
+.photo-code-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.75rem;
+}
+
+.photo-code-title {
+  font-size: 0.95rem;
+  font-weight: 600;
+}
+
+.photo-code-copy {
+  background: rgba(255, 255, 255, 0.16);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  color: #fff;
+  padding: 0.35rem 0.7rem;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  cursor: pointer;
+}
+
+.photo-code-copy:hover,
+.photo-code-copy:focus {
+  background: rgba(255, 255, 255, 0.24);
+}
+
+.photo-code-body {
+  display: grid;
+  grid-template-columns: 200px minmax(0, 1fr);
+  gap: 12px;
+  max-height: 280px;
+}
+
+.photo-code-files {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  max-height: 240px;
+  overflow: auto;
+  padding-right: 6px;
+}
+
+.photo-code-file {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: rgba(255, 255, 255, 0.85);
+  padding: 6px 8px;
+  border-radius: 8px;
+  text-align: left;
+  font-size: 0.78rem;
+  cursor: pointer;
+  transition: background 120ms ease, border-color 120ms ease;
+}
+
+.photo-code-file:hover,
+.photo-code-file:focus {
+  background: rgba(255, 255, 255, 0.16);
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+.photo-code-file.active {
+  background: rgba(255, 255, 255, 0.24);
+  border-color: rgba(255, 255, 255, 0.35);
+  color: #fff;
+}
+
+.photo-code-preview {
+  min-width: 0;
+  max-height: 280px;
+}
+
+.photo-code-pre {
+  margin: 0;
+  padding: 0.75rem;
+  background: rgba(8, 8, 10, 0.8);
+  border-radius: 10px;
+  overflow: auto;
+  max-height: 240px;
+  font-size: 0.78rem;
+  line-height: 1.4;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.photo-code-empty {
+  font-size: 0.85rem;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+@media (max-width: 768px) {
+  .photo-code-block {
+    padding: 0.75rem;
+  }
+
+  .photo-detail-content {
+    height: 200px;
+  }
+
+  .photo-code-body {
+    grid-template-columns: 1fr;
+  }
+
+  .photo-code-files {
+    max-height: 160px;
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+
+  .photo-code-pre {
+    max-height: 200px;
+    font-size: 0.72rem;
+  }
+}

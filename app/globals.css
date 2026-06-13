@@ -1,0 +1,173 @@
+:root {
+  color-scheme: dark;
+}
+
+html,
+body {
+  height: 100%;
+  width: 100%;
+  overflow-x: hidden; /* Prevent horizontal scroll on mobile */
+}
+
+body {
+  margin: 0;
+  background: radial-gradient(1200px 800px at 20% 10%, rgba(34, 197, 94, 0.14), rgba(0, 0, 0, 0)),
+    radial-gradient(900px 600px at 80% 20%, rgba(56, 189, 248, 0.10), rgba(0, 0, 0, 0)),
+    #0b0b0f;
+  color: rgba(255, 255, 255, 0.92);
+  font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial;
+}
+
+a {
+  color: inherit;
+}
+
+.pepple-loading-screen {
+  position: fixed;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  background: radial-gradient(1200px 800px at 20% 10%, rgba(34, 197, 94, 0.14), rgba(0, 0, 0, 0)),
+    radial-gradient(900px 600px at 80% 20%, rgba(56, 189, 248, 0.10), rgba(0, 0, 0, 0)), #0b0b0f;
+}
+
+.pepple-loading-card {
+  width: min(320px, calc(100vw - 48px));
+  padding: 28px 24px 22px;
+  border-radius: 22px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.10);
+  box-shadow: 0 18px 60px rgba(0, 0, 0, 0.55);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  display: grid;
+  justify-items: center;
+  gap: 16px;
+}
+
+.pepple-loading-logo {
+  width: 110px;
+  height: 110px;
+  object-fit: contain;
+  filter: drop-shadow(0 18px 28px rgba(0, 0, 0, 0.35));
+}
+
+.pepple-loading-spinner {
+  width: 32px;
+  height: 32px;
+  border-radius: 999px;
+  border: 3px solid rgba(255, 255, 255, 0.20);
+  border-top-color: rgba(255, 255, 255, 0.85);
+  animation: pepple-spin 0.9s linear infinite;
+}
+
+.app-route-loading {
+  min-height: 120px;
+  display: grid;
+  place-items: center;
+}
+
+.app-route-loading::before {
+  content: "";
+  width: 28px;
+  height: 28px;
+  border-radius: 999px;
+  border: 3px solid rgba(255, 255, 255, 0.20);
+  border-top-color: rgba(255, 255, 255, 0.85);
+  animation: pepple-spin 0.9s linear infinite;
+}
+
+@keyframes pepple-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pepple-loading-spinner,
+  .app-route-loading::before {
+    animation: none;
+  }
+}
+
+.pepple-wallpaper {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.pepple-wallpaper-stack {
+  position: absolute;
+  inset: 0;
+}
+
+.pepple-wallpaper-layer {
+  position: absolute;
+  inset: -18px;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  opacity: 0;
+  transform: scale(1.04);
+  transition: opacity 900ms ease, transform 6000ms ease;
+  filter: saturate(1.06) contrast(1.05);
+}
+
+.pepple-wallpaper-layer.is-active {
+  opacity: 1;
+  transform: scale(1.10);
+}
+
+.pepple-wallpaper-vignette {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(1200px 800px at 40% 10%, rgba(0, 0, 0, 0.15), rgba(0, 0, 0, 0.60)),
+    linear-gradient(to bottom, rgba(0, 0, 0, 0.30), rgba(0, 0, 0, 0.26));
+}
+
+.pepple-wallpaper-noise {
+  position: absolute;
+  inset: 0;
+  opacity: 0.06;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='120' height='120' filter='url(%23n)' opacity='.45'/%3E%3C/svg%3E");
+}
+
+body.ipad-frame-mode .pepple-wallpaper-layer {
+  filter: saturate(1.08) contrast(1.04) brightness(1.06);
+}
+
+body.ipad-frame-mode .pepple-wallpaper-vignette {
+  background: radial-gradient(1200px 800px at 40% 10%, rgba(0, 0, 0, 0.10), rgba(0, 0, 0, 0.42)),
+    linear-gradient(to bottom, rgba(0, 0, 0, 0.18), rgba(0, 0, 0, 0.16));
+}
+
+.pepple-wallpaper-pill {
+  position: absolute;
+  right: 14px;
+  bottom: 14px;
+  pointer-events: auto;
+  z-index: 50;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: rgba(0, 0, 0, 0.25);
+  color: rgba(255, 255, 255, 0.85);
+  border-radius: 999px;
+  padding: 8px 12px;
+  font-size: 12px;
+  letter-spacing: 0.02em;
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+}
+
+.pepple-wallpaper-pill:hover {
+  background: rgba(0, 0, 0, 0.34);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pepple-wallpaper-layer {
+    transition: none;
+    transform: none;
+  }
+}

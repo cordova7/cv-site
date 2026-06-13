@@ -1,0 +1,249 @@
+/* iOS Calendar Styles */
+.ios-calendar {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--ios-system-background);
+  color: var(--ios-text-primary);
+  overflow: hidden;
+  position: relative;
+}
+
+/* Navigation Bar */
+.ios-nav-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 16px;
+  background-color: var(--ios-secondary-system-background);
+  border-bottom: 0.5px solid var(--ios-separator);
+  backdrop-filter: var(--blur-strong);
+  -webkit-backdrop-filter: var(--blur-strong);
+  height: 44px;
+}
+
+.ios-nav-title {
+  font-size: 17px;
+  font-weight: 600;
+  color: var(--ios-text-primary);
+}
+
+.ios-nav-actions {
+  display: flex;
+  gap: 16px;
+}
+
+.ios-nav-button {
+  color: var(--ios-blue);
+  font-size: 17px;
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+}
+
+/* Calendar Header */
+.calendar-header {
+  padding: 16px;
+  background-color: var(--ios-secondary-system-background);
+  border-bottom: 0.5px solid var(--ios-separator);
+  backdrop-filter: var(--blur-medium);
+  -webkit-backdrop-filter: var(--blur-medium);
+}
+
+.calendar-date {
+  font-size: 20px;
+  font-weight: 600;
+  margin-bottom: 12px;
+  color: var(--ios-text-primary);
+}
+
+.calendar-view-controls {
+  display: flex;
+  gap: 8px;
+}
+
+.view-button {
+  padding: 6px 12px;
+  border-radius: 8px;
+  border: none;
+  background-color: var(--ios-tertiary-system-background);
+  color: var(--ios-text-primary);
+  font-size: 15px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.view-button.active {
+  background-color: var(--ios-blue);
+  color: white;
+}
+
+/* Calendar Content */
+.calendar-content {
+  flex: 1;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  padding: 16px;
+}
+
+.events-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.event-item {
+  display: flex;
+  align-items: center;
+  padding: 12px;
+  background-color: var(--ios-secondary-system-background);
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  backdrop-filter: var(--blur-medium);
+  -webkit-backdrop-filter: var(--blur-medium);
+}
+
+.event-item:active {
+  transform: scale(0.98);
+  opacity: 0.8;
+}
+
+.event-time {
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--ios-text-primary);
+  min-width: 80px;
+}
+
+.event-details {
+  flex: 1;
+  margin: 0 12px;
+}
+
+.event-title {
+  font-size: 17px;
+  font-weight: 500;
+  margin-bottom: 2px;
+  color: var(--ios-text-primary);
+}
+
+.event-duration {
+  font-size: 13px;
+  color: var(--ios-text-secondary);
+}
+
+.event-color {
+  width: 8px;
+  height: 8px;
+  border-radius: 4px;
+}
+
+/* Event Details Modal */
+.event-details-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: var(--ios-system-background);
+  z-index: 1000;
+  padding: 16px;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  animation: slideUp 0.3s ease-out;
+}
+
+.details-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+  padding: 8px 0;
+}
+
+.details-back {
+  color: var(--ios-blue);
+  font-size: 17px;
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+}
+
+.details-title {
+  font-size: 17px;
+  font-weight: 600;
+  color: var(--ios-text-primary);
+}
+
+.event-details-body {
+  background-color: var(--ios-secondary-system-background);
+  border-radius: 10px;
+  padding: 16px;
+  backdrop-filter: var(--blur-medium);
+  -webkit-backdrop-filter: var(--blur-medium);
+}
+
+.detail-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 0;
+  border-bottom: 0.5px solid var(--ios-separator);
+  color: var(--ios-text-primary);
+  font-size: 17px;
+}
+
+.detail-row:last-child {
+  border-bottom: none;
+}
+
+.detail-label {
+  color: var(--ios-text-secondary);
+}
+
+/* Animations */
+@keyframes slideUp {
+  from {
+    transform: translateY(100%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
+/* Dark Mode Adjustments */
+.dark-mode .event-item {
+  background-color: var(--ios-secondary-system-background);
+}
+
+.dark-mode .view-button {
+  background-color: var(--ios-tertiary-system-background);
+}
+
+/* Mobile Optimizations */
+@media (max-width: 375px) {
+  .calendar-date {
+    font-size: 18px;
+  }
+
+  .view-button {
+    padding: 4px 8px;
+    font-size: 13px;
+  }
+
+  .event-time {
+    font-size: 13px;
+    min-width: 60px;
+  }
+
+  .event-title {
+    font-size: 15px;
+  }
+
+  .event-duration {
+    font-size: 12px;
+  }
+} 

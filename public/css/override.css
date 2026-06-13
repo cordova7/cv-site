@@ -1,0 +1,31 @@
+/* Override portrait mode message */
+@media screen and (orientation: landscape) {
+  body::before {
+    display: none !important;
+    content: none !important;
+  }
+}
+
+/* Ensure proper display in both orientations */
+@media screen and (max-width: 428px) {
+  .app-window {
+    position: fixed !important;
+    top: 40px !important;
+    left: 0 !important;
+    right: 0 !important;
+    bottom: 60px !important;
+    width: 100% !important;
+    height: auto !important;
+    margin: 0 !important;
+    border-radius: 0 !important;
+    transform: none !important;
+  }
+
+  #mobile-dock {
+    display: flex !important;
+  }
+
+  .desktop-apps {
+    display: none !important;
+  }
+} 

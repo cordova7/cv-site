@@ -1,0 +1,15 @@
+[
+    {
+        "match": ".well-known",
+        "ignore": false,
+
+        "security_policy": "standard",
+        "disable_security_policy_warning": true,
+        "allow_raw_access": false,
+        "headers": {
+            "Access-Control-Allow-Origin": "*",
+            "Content-Type": "application/json"
+        },
+
+    }
+]

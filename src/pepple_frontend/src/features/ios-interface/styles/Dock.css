@@ -1,0 +1,226 @@
+/* Dock Base Styles */
+.ios-dock {
+  position: fixed !important;
+  bottom: calc(max(env(safe-area-inset-bottom, 0px) + 42px)) !important; /* Position above home indicator */
+  left: 16px !important;
+  right: 16px !important;
+  z-index: 9997 !important; /* Below home indicator but above other content */
+  transform: none !important;
+  will-change: auto !important;
+  pointer-events: auto !important;
+  isolation: isolate !important;
+  contain: layout style paint !important;
+}
+
+.ios-dock-apps {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 8px !important;
+  margin: 0 auto !important;
+  padding: 6px 10px !important;
+  background-color: rgba(250, 250, 250, 0.35) !important;
+  border-radius: 24px !important;
+  max-width: 320px !important;
+  width: auto !important;
+  border: 0.5px solid rgba(255, 255, 255, 0.4) !important;
+  box-shadow: var(--shadow-medium) !important;
+  transform: none !important;
+  backface-visibility: visible !important;
+  perspective: none !important;
+  backdrop-filter: var(--blur-strong) !important;
+  -webkit-backdrop-filter: var(--blur-strong) !important;
+}
+
+/* Dock Icon Styles */
+.ios-dock .ios-app-icon {
+  margin: 0 !important;
+  padding: 0 !important;
+  height: auto !important;
+  position: relative !important;
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+}
+
+.ios-dock .ios-app-icon .ios-app-icon-img {
+  width: 48px !important;
+  height: 48px !important;
+  border-radius: 12px !important;
+  /* transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important; */
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1) !important;
+  margin: 0 !important;
+}
+
+.ios-dock .ios-app-icon .ios-app-icon-img img {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: contain;
+}
+
+.ios-dock .ios-app-icon .ios-app-icon-img.ios-icon-plain {
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+
+.ios-dock .ios-app-icon .ios-app-icon-img.ios-icon-plain img {
+  width: 150% !important;
+  height: 150% !important;
+  object-fit: contain !important;
+}
+
+.ios-dock .ios-app-icon[data-app-id="github"] .ios-app-icon-img img {
+  width: 180% !important;
+  height: 180% !important;
+  object-fit: cover !important;
+}
+
+.ios-dock .ios-app-icon .ios-app-icon-img.ios-icon-glass .ios-icon-svg {
+  width: 130% !important;
+  height: 130% !important;
+}
+
+.ios-dock .ios-app-icon[data-app-id="finder"] .ios-app-icon-img img {
+  border-radius: 0;
+  object-fit: cover;
+  width: 100%;
+  height: 100%;
+  transform: none;
+}
+
+.ios-dock .ios-app-icon[data-app-id="notes"] .ios-app-icon-img img {
+  border-radius: 0;
+  object-fit: cover;
+  transform: scale(1.35);
+}
+
+/* Hide app names in dock */
+.ios-dock .ios-app-icon .ios-app-icon-name {
+  display: none !important;
+}
+
+/* Dark Mode Styles */
+.dark-mode .ios-dock-apps {
+  background-color: rgba(28, 28, 30, 0.4) !important;
+  border: 0.5px solid rgba(255, 255, 255, 0.15) !important;
+  box-shadow: var(--shadow-strong) !important;
+}
+
+/* Desktop Styles */
+@media (min-width: 768px) {
+  .ios-dock {
+    bottom: 31px !important;
+  }
+
+  .ios-dock-apps {
+    padding: 8px 14px !important;
+    border-radius: 26px !important;
+    max-width: 340px !important;
+    gap: 10px !important;
+    backdrop-filter: var(--blur-strong) !important;
+    -webkit-backdrop-filter: var(--blur-strong) !important;
+    background-color: rgba(250, 250, 250, 0.3) !important;
+  }
+
+  .dark-mode .ios-dock-apps {
+    background-color: rgba(28, 28, 30, 0.35) !important;
+  }
+
+  .ios-dock .ios-app-icon .ios-app-icon-img {
+    width: 54px !important;
+    height: 54px !important;
+    border-radius: 14px !important;
+  }
+
+  .ios-dock .ios-app-icon .ios-app-icon-img.ios-icon-glass .ios-icon-svg {
+    width: 130% !important;
+    height: 130% !important;
+  }
+}
+
+/* Small Screen Adjustments */
+@media (max-width: 375px) {
+  .ios-dock-apps {
+    padding: 5px 8px !important;
+    border-radius: 18px !important;
+    max-width: 260px !important;
+    gap: 6px !important;
+  }
+
+  .ios-dock .ios-app-icon .ios-app-icon-img {
+    width: 42px !important;
+    height: 42px !important;
+    border-radius: 10px !important;
+  }
+}
+
+/* Hide legacy dock elements - CRITICAL: Ensures only React dock is shown */
+.desktop-dock,
+.os-dock,
+.dock-container,
+.os-container.desktop-only .dock-container,
+#desktop-dock,
+#mobile-dock {
+  display: none !important;
+}
+
+/* Add hover effect for desktop */
+@media (hover: hover) {
+  .ios-dock .ios-app-icon:hover .ios-app-icon-img {
+    transform: none !important;
+  }
+  
+  .ios-dock .ios-app-icon:hover {
+    transform: none !important;
+  }
+}
+
+/* Add subtle animation when dock appears */
+@keyframes dockAppear {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.ios-dock {
+  animation: dockAppear 0.5s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+/* Mobile-specific styles - maintaining transparency */
+@media (max-width: 767px) {
+  .ios-dock {
+    bottom: calc(max(env(safe-area-inset-bottom, 0px) + 36px)) !important;
+  }
+  
+  .ios-dock-apps {
+    backdrop-filter: var(--blur-strong) !important;
+    -webkit-backdrop-filter: var(--blur-strong) !important;
+    background-color: rgba(250, 250, 250, 0.4) !important;
+  }
+
+  .dark-mode .ios-dock-apps {
+    background-color: rgba(28, 28, 30, 0.45) !important;
+  }
+}
+
+/* Fallback for browsers without backdrop-filter - slightly more opaque but still elegant */
+@supports not (backdrop-filter: blur(20px)) and
+  not (-webkit-backdrop-filter: blur(20px)) {
+  .ios-dock-apps {
+    background-color: rgba(250, 250, 250, 0.65);
+  }
+
+  .dark-mode .ios-dock-apps {
+    background-color: rgba(28, 28, 30, 0.7);
+  }
+}
+
+/* Desktop transparency optimization - no longer needed as base styles are now elegant */
+ 

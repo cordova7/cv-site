@@ -1,0 +1,708 @@
+/* PEPL Tokenomics Styling - Professional Version */
+.pepl-nomics-app {
+  font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, 'Helvetica Neue', sans-serif;
+  color: #1F1F1F;
+  user-select: none;
+  background: radial-gradient(circle at center, #f7e9d7 0%, #f2e0c8 30%, #e8d6be 60%, #deccb4 100%);
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+/* iOS App container structure */
+.pepl-nomics-app .ios-app-container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+  background: transparent;
+  position: relative;
+  z-index: 1;
+}
+
+.pepl-nomics-app .ios-app-content {
+  flex: 1;
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
+  padding-bottom: 30px;
+  background: transparent;
+}
+
+/* Hero section styling */
+.pepl-nomics-app .hero {
+  text-align: center;
+  padding: 30px 20px;
+  background: transparent;
+  position: relative;
+}
+
+.pepl-nomics-app .hero h1 {
+  font-size: 2.8rem;
+  margin-bottom: 10px;
+  font-weight: 800;
+  color: #8D6A51;
+  text-shadow: 0 2px 15px rgba(255, 255, 255, 0.4);
+  position: relative;
+  display: inline-block;
+}
+
+.pepl-nomics-app .hero h1::after {
+  content: "";
+  position: absolute;
+  bottom: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80px;
+  height: 4px;
+  background: linear-gradient(to right, #8D6A51, #C8A989);
+  border-radius: 2px;
+}
+
+.pepl-nomics-app .shine-text {
+  background: linear-gradient(45deg, #8D6A51 0%, #C8A989 25%, #F0D8B6 50%, #C8A989 75%, #8D6A51 100%);
+  background-size: 200% auto;
+  color: transparent;
+  -webkit-background-clip: text;
+  background-clip: text;
+  font-weight: 600;
+  display: inline-block;
+  animation: titleShine 4s ease-in-out infinite;
+  font-size: 1.3rem;
+  letter-spacing: 0.5px;
+}
+
+@keyframes titleShine {
+  from {
+    background-position: 0% center;
+    filter: drop-shadow(0 2px 15px rgba(255, 255, 255, 0.2));
+  }
+  to {
+    background-position: 100% center;
+    filter: drop-shadow(0 2px 15px rgba(255, 255, 255, 0.6));
+  }
+}
+
+/* Card styling with enhanced visual effects */
+.pepl-nomics-app .card {
+  background: rgba(255, 255, 255, 0.8);
+  border-radius: 18px;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+  margin: 0 auto 24px;
+  padding: 24px;
+  max-width: 800px;
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  overflow: hidden;
+  position: relative;
+}
+
+.pepl-nomics-app .card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, rgba(255,255,255,0.2) 0%, rgba(255,255,255,0) 100%);
+  z-index: 0;
+}
+
+.pepl-nomics-app .card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.12);
+}
+
+.pepl-nomics-app .tokenomics-section {
+  padding: 0 20px;
+  position: relative;
+}
+
+.pepl-nomics-app .tokenomics-card {
+  position: relative;
+  z-index: 1;
+}
+
+.pepl-nomics-app .tokenomics-card h2 {
+  font-size: 1.7rem;
+  margin-bottom: 24px;
+  color: #8D6A51;
+  text-align: center;
+  position: relative;
+  padding-bottom: 12px;
+}
+
+.pepl-nomics-app .tokenomics-card h2::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 50px;
+  height: 3px;
+  background: linear-gradient(to right, #8D6A51, #C8A989);
+  border-radius: 1.5px;
+}
+
+.pepl-nomics-app .total-supply {
+  background: linear-gradient(to bottom, #C8A989 0%, #8D6A51 50%, #5D4535 100%);
+  color: transparent;
+  -webkit-background-clip: text;
+  background-clip: text;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+  font-weight: bold;
+  display: inline-block;
+  padding: 0 8px;
+  border: 1px solid rgba(200, 169, 137, 0.3);
+  border-radius: 6px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1), inset 0 1px 3px rgba(255, 255, 255, 0.2);
+  font-size: 1.2rem;
+}
+
+/* Token allocation styling with animations */
+.pepl-nomics-app .token-allocation {
+  margin-top: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.pepl-nomics-app .allocation-item {
+  display: flex;
+  gap: 16px;
+  background: rgba(255, 255, 255, 0.6);
+  padding: 18px;
+  border-radius: 14px;
+  border: 1px solid rgba(255, 255, 255, 0.8);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.05);
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.pepl-nomics-app .allocation-item::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, rgba(255,255,255,0.2) 0%, rgba(255,255,255,0) 100%);
+  z-index: 0;
+}
+
+.pepl-nomics-app .allocation-item:hover {
+  transform: translateY(-5px) scale(1.02);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+  border-color: rgba(200, 169, 137, 0.4);
+}
+
+.pepl-nomics-app .allocation-icon {
+  font-size: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 56px;
+  height: 56px;
+  flex-shrink: 0;
+  background: rgba(255, 255, 255, 0.7);
+  border-radius: 50%;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  position: relative;
+  z-index: 1;
+  transition: all 0.3s ease;
+}
+
+.pepl-nomics-app .allocation-item:hover .allocation-icon {
+  transform: scale(1.1) rotate(5deg);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
+}
+
+.pepl-nomics-app .allocation-details {
+  flex: 1;
+  position: relative;
+  z-index: 1;
+}
+
+.pepl-nomics-app .allocation-details h3 {
+  font-size: 1.2rem;
+  font-weight: 700;
+  margin-bottom: 8px;
+  color: #5D4535;
+}
+
+.pepl-nomics-app .allocation-details p {
+  font-size: 1rem;
+  color: #666;
+  margin-bottom: 8px;
+  line-height: 1.4;
+}
+
+.pepl-nomics-app .allocation-details ul {
+  padding-left: 20px;
+  margin-top: 8px;
+}
+
+.pepl-nomics-app .allocation-details li {
+  margin-bottom: 6px;
+  font-size: 0.95rem;
+  color: #666;
+  line-height: 1.3;
+  position: relative;
+}
+
+.pepl-nomics-app .allocation-details li::marker {
+  color: #8D6A51;
+}
+
+/* Chart Component Styling */
+.pepl-nomics-app .chart-container {
+  width: 100%;
+  max-width: 400px;
+  height: 400px;
+  margin: 0 auto 30px;
+  position: relative;
+}
+
+.pepl-nomics-app .chart-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.pepl-nomics-app .legend-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.9rem;
+  color: #5D4535;
+}
+
+.pepl-nomics-app .legend-color {
+  width: 12px;
+  height: 12px;
+  border-radius: 2px;
+}
+
+/* Animated Background Effects */
+.pepl-nomics-app .perpetual-gradient {
+  position: absolute;
+  top: -20%;
+  left: -20%;
+  right: -20%;
+  bottom: -20%;
+  background: radial-gradient(
+    circle at center, 
+    rgba(255, 255, 255, 0.7) 0%, 
+    rgba(240, 216, 182, 0.5) 30%, 
+    rgba(200, 169, 137, 0.3) 60%,
+    transparent 85%
+  );
+  background-size: 200% 200%;
+  animation: fluidMove 25s infinite cubic-bezier(0.4, 0, 0.2, 1);
+  pointer-events: none;
+  z-index: 0;
+  filter: blur(4px);
+  mix-blend-mode: overlay;
+}
+
+.pepl-nomics-app .gradient-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(160deg, rgba(255,255,255,0.2) 0%, rgba(255,255,255,0.05) 40%, rgba(220,200,180,0.1) 100%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+@keyframes fluidMove {
+  0% {
+    background-position: 0% 0%;
+    transform: scale(1);
+  }
+  50% {
+    background-position: 100% 100%;
+    transform: scale(1.1);
+  }
+  100% {
+    background-position: 0% 0%;
+    transform: scale(1);
+  }
+}
+
+/* Animations for staggered entrance */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.pepl-nomics-app .fade-in {
+  opacity: 0;
+  animation: fadeInUp 0.6s forwards;
+}
+
+.pepl-nomics-app .delay-1 {
+  animation-delay: 0.1s;
+}
+
+.pepl-nomics-app .delay-2 {
+  animation-delay: 0.2s;
+}
+
+.pepl-nomics-app .delay-3 {
+  animation-delay: 0.3s;
+}
+
+.pepl-nomics-app .delay-4 {
+  animation-delay: 0.4s;
+}
+
+.pepl-nomics-app .delay-5 {
+  animation-delay: 0.5s;
+}
+
+/* Stats section styling */
+.pepl-nomics-app .stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 16px;
+  margin: 30px 0;
+}
+
+.pepl-nomics-app .stat-card {
+  background: rgba(255, 255, 255, 0.7);
+  padding: 20px;
+  border-radius: 14px;
+  text-align: center;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.pepl-nomics-app .stat-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+}
+
+.pepl-nomics-app .stat-value {
+  font-size: 1.8rem;
+  font-weight: 700;
+  margin-bottom: 8px;
+  color: #8D6A51;
+  position: relative;
+}
+
+.pepl-nomics-app .stat-label {
+  font-size: 0.9rem;
+  color: #666;
+  font-weight: 500;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .pepl-nomics-app .hero h1 {
+    font-size: 2.3rem;
+  }
+  
+  .pepl-nomics-app .shine-text {
+    font-size: 1.2rem;
+  }
+  
+  .pepl-nomics-app .tokenomics-section {
+    padding: 0 15px;
+  }
+  
+  .pepl-nomics-app .allocation-item {
+    padding: 16px;
+  }
+
+  .pepl-nomics-app .allocation-icon {
+    width: 48px;
+    height: 48px;
+    font-size: 24px;
+  }
+
+  .pepl-nomics-app .tokenomics-card h2 {
+    font-size: 1.5rem;
+  }
+
+  .pepl-nomics-app .stats-grid {
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  }
+}
+
+@media (max-width: 480px) {
+  .pepl-nomics-app .hero h1 {
+    font-size: 2rem;
+  }
+  
+  .pepl-nomics-app .shine-text {
+    font-size: 1.1rem;
+  }
+
+  .pepl-nomics-app .card {
+    padding: 20px;
+  }
+
+  .pepl-nomics-app .allocation-item {
+    padding: 14px;
+  }
+
+  .pepl-nomics-app .allocation-icon {
+    width: 40px;
+    height: 40px;
+    font-size: 20px;
+  }
+
+  .pepl-nomics-app .allocation-details h3 {
+    font-size: 1.1rem;
+  }
+
+  .pepl-nomics-app .allocation-details p,
+  .pepl-nomics-app .allocation-details li {
+    font-size: 0.9rem;
+  }
+
+  .pepl-nomics-app .stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .pepl-nomics-app .stat-value {
+    font-size: 1.5rem;
+  }
+}
+
+/* iPad frame adjustments */
+.ipad-frame-screen .pepl-nomics-app .ios-app-container {
+  height: 100%;
+  max-height: 778px;
+  overflow-y: auto;
+}
+
+.ipad-frame-screen .pepl-nomics-app .hero {
+  padding-top: 60px;
+}
+
+.ipad-frame-screen .pepl-nomics-app .tokenomics-section {
+  padding: 0 60px 40px;
+}
+
+.ipad-frame-screen .pepl-nomics-app .card {
+  max-width: 700px;
+}
+
+/* Tab navigation styling */
+.pepl-nomics-app .tabs-container {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 30px;
+  position: relative;
+  z-index: 1;
+}
+
+.pepl-nomics-app .tab-button {
+  padding: 10px 20px;
+  border: none;
+  background: rgba(255, 255, 255, 0.4);
+  color: #5D4535;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.6);
+}
+
+.pepl-nomics-app .tab-button:first-child {
+  border-top-left-radius: 12px;
+  border-bottom-left-radius: 12px;
+}
+
+.pepl-nomics-app .tab-button:last-child {
+  border-top-right-radius: 12px;
+  border-bottom-right-radius: 12px;
+}
+
+.pepl-nomics-app .tab-button.active {
+  background: rgba(200, 169, 137, 0.8);
+  color: white;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  font-weight: 700;
+}
+
+/* Calculator styling */
+.pepl-nomics-app .calculator-container {
+  padding: 20px;
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 12px;
+  margin-top: 20px;
+}
+
+.pepl-nomics-app .input-group {
+  margin-bottom: 20px;
+}
+
+.pepl-nomics-app .input-group label {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 8px;
+  color: #5D4535;
+  font-size: 1rem;
+}
+
+.pepl-nomics-app .calculator-input {
+  width: 100%;
+  padding: 12px;
+  border-radius: 8px;
+  border: 1px solid rgba(200, 169, 137, 0.4);
+  background: rgba(255, 255, 255, 0.8);
+  font-size: 1.1rem;
+  color: #5D4535;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  transition: all 0.3s ease;
+}
+
+.pepl-nomics-app .calculator-input:focus {
+  outline: none;
+  border-color: rgba(141, 106, 81, 0.8);
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
+}
+
+.pepl-nomics-app .range-slider {
+  width: 100%;
+  height: 8px;
+  -webkit-appearance: none;
+  appearance: none;
+  background: rgba(255, 255, 255, 0.6);
+  border-radius: 4px;
+  outline: none;
+  margin: 10px 0;
+}
+
+.pepl-nomics-app .range-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: #8D6A51;
+  cursor: pointer;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s ease;
+}
+
+.pepl-nomics-app .range-slider::-webkit-slider-thumb:hover {
+  background: #C8A989;
+  transform: scale(1.1);
+}
+
+.pepl-nomics-app .range-slider::-moz-range-thumb {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: #8D6A51;
+  cursor: pointer;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s ease;
+  border: none;
+}
+
+.pepl-nomics-app .range-slider::-moz-range-thumb:hover {
+  background: #C8A989;
+  transform: scale(1.1);
+}
+
+.pepl-nomics-app .days-display {
+  text-align: center;
+  font-size: 0.9rem;
+  color: #666;
+  margin-top: 8px;
+}
+
+.pepl-nomics-app .rewards-display {
+  background: rgba(141, 106, 81, 0.1);
+  padding: 20px;
+  border-radius: 10px;
+  margin-top: 30px;
+  text-align: center;
+  border: 1px solid rgba(141, 106, 81, 0.2);
+}
+
+.pepl-nomics-app .reward-label {
+  font-size: 1rem;
+  color: #5D4535;
+  margin-bottom: 8px;
+}
+
+.pepl-nomics-app .reward-value {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #8D6A51;
+  margin-bottom: 5px;
+}
+
+.pepl-nomics-app .reward-percent {
+  font-size: 1.1rem;
+  color: #8D6A51;
+  font-weight: 500;
+}
+
+.pepl-nomics-app .calculator-note {
+  margin-top: 20px;
+  padding: 12px;
+  background: rgba(255, 255, 255, 0.5);
+  border-radius: 8px;
+  font-size: 0.9rem;
+  color: #666;
+}
+
+@media (max-width: 768px) {
+  .pepl-nomics-app .calculator-container {
+    padding: 15px;
+  }
+  
+  .pepl-nomics-app .reward-value {
+    font-size: 1.6rem;
+  }
+  
+  .pepl-nomics-app .reward-percent {
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .pepl-nomics-app .calculator-container {
+    padding: 12px;
+  }
+  
+  .pepl-nomics-app .input-group label {
+    font-size: 0.9rem;
+  }
+  
+  .pepl-nomics-app .calculator-input {
+    padding: 10px;
+    font-size: 1rem;
+  }
+  
+  .pepl-nomics-app .reward-value {
+    font-size: 1.4rem;
+  }
+  
+  .pepl-nomics-app .calculator-note {
+    font-size: 0.8rem;
+  }
+} 

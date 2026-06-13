@@ -1,0 +1,338 @@
+/* Modern Glass Morphism Dock - Enhanced Transparency & Elegance */
+
+.glass-dock {
+  position: fixed;
+  bottom: 26px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 9998;
+  pointer-events: none;
+  contain: layout style paint;
+  /* Ensure proper stacking above other content */
+  isolation: isolate;
+}
+
+.ipad-frame-screen .glass-dock {
+  position: absolute;
+  left: 50%;
+  bottom: 56px;
+  transform: translateX(-50%);
+}
+
+
+.glass-dock-container {
+  position: relative;
+  padding: 4px 10px;
+  border-radius: 32px;
+  pointer-events: auto;
+  z-index: 2;
+  overflow: hidden;
+  
+  /* Liquid glass surface */
+  background: var(--liquid-tint-light);
+  
+  backdrop-filter: var(--liquid-blur-strong);
+  -webkit-backdrop-filter: var(--liquid-blur-strong);
+  
+  border: 0.5px solid var(--liquid-border-light);
+  
+  box-shadow: var(--liquid-shadow), var(--liquid-inner-highlight), var(--liquid-inner-shade);
+  
+  /* Hardware acceleration */
+  transform: translate3d(0, 0, 0);
+  will-change: transform;
+  
+  /* Smooth entrance animation */
+  animation: dockGlassAppear 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  isolation: isolate;
+}
+
+.glass-dock-container::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background-image: var(--liquid-caustics), var(--liquid-sheen);
+  opacity: 0.5;
+  mix-blend-mode: overlay;
+  pointer-events: none;
+}
+
+.glass-dock-container::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  background:
+    radial-gradient(120% 80% at 50% -20%, rgba(255, 255, 255, 0.26), transparent 62%),
+    radial-gradient(120% 80% at 50% 120%, rgba(0, 0, 0, 0.24), transparent 65%);
+  opacity: 0.85;
+}
+
+.glass-dock-inner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  position: relative;
+  z-index: 1;
+}
+
+
+/* App Icon Styles */
+.glass-dock-app-icon {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 4px;
+  border-radius: 16px;
+  transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+  cursor: pointer;
+  transform-origin: center bottom;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  will-change: transform;
+}
+
+.glass-dock-app-icon-img {
+  position: relative;
+  width: 56px;
+  height: 56px;
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  
+  background: rgba(255, 255, 255, 0.05);
+  
+  border: 0.25px solid var(--liquid-border-light-weak);
+  
+  /* Very subtle shadow */
+  box-shadow: 
+    0 2px 8px rgba(0, 0, 0, 0.06),
+    inset 0 0.5px 0 rgba(255, 255, 255, 0.05);
+  
+  transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  transform: translate3d(0, 0, 0);
+  will-change: transform;
+}
+
+.glass-dock-app-icon-img img {
+  width: 48px;
+  height: 48px;
+  border-radius: 11px;
+  transition: all 0.3s ease;
+  z-index: 2;
+  position: relative;
+  display: block;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  image-rendering: -webkit-optimize-contrast;
+}
+
+.glass-dock-app-icon-img.ios-icon-plain {
+  background: transparent;
+  border: none;
+  box-shadow: none;
+}
+
+.glass-dock-app-icon-img.ios-icon-plain img {
+  width: 150%;
+  height: 150%;
+  object-fit: contain;
+}
+
+.glass-dock-app-icon[data-app-id="github"] .glass-dock-app-icon-img img {
+  width: 180%;
+  height: 180%;
+  object-fit: cover;
+}
+
+.glass-dock-app-icon-img.ios-icon-glass .ios-icon-svg {
+  width: 130%;
+  height: 130%;
+  z-index: 2;
+  position: relative;
+}
+
+.glass-dock-app-icon[data-app-id="finder"] .glass-dock-app-icon-img img {
+  transform: scale(1.15);
+}
+
+.glass-dock-app-icon[data-app-id="notes"] .glass-dock-app-icon-img img {
+  width: 100%;
+  height: 100%;
+  border-radius: 0;
+  transform: scale(1.35);
+  object-fit: cover;
+}
+
+.glass-dock-app-icon[data-app-id="safari"] .glass-dock-app-icon-img {
+  background: transparent;
+}
+
+.glass-dock-app-icon[data-app-id="safari"] .glass-dock-app-icon-img img {
+  width: 100%;
+  height: 100%;
+  border-radius: 14px;
+  object-fit: cover;
+}
+
+
+.glass-dock-icon-glow {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border-radius: 14px;
+  background: radial-gradient(circle at center,
+    rgba(255, 255, 255, 0.1) 0%,
+    transparent 70%
+  );
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+}
+
+.glass-dock-app-icon-name {
+  display: none;
+}
+
+/* Hover Effects */
+.glass-dock-app-icon:hover {
+  transform: translateY(-4px) scale(1.08);
+}
+
+.glass-dock-app-icon:hover .glass-dock-app-icon-img {
+  transform: translate3d(0, 0, 0);
+  box-shadow: 
+    0 6px 16px rgba(0, 0, 0, 0.12),
+    inset 0 0.5px 0 rgba(255, 255, 255, 0.08);
+}
+
+.glass-dock-app-icon:hover .glass-dock-icon-glow {
+  opacity: 0.6;
+}
+
+.glass-dock-container:hover {
+  background: var(--liquid-tint-light-strong);
+}
+
+
+/* Active/Click State */
+.glass-dock-app-icon:active {
+  transform: translateY(-4px) scale(0.98);
+}
+
+.glass-dock-app-icon:active .glass-dock-app-icon-img {
+  transform: translate3d(0, 0, 0);
+}
+
+/* Dark Mode Adaptations */
+.dark-mode .glass-dock-container {
+  background: var(--liquid-tint-light);
+  border-color: var(--liquid-border-light);
+  box-shadow: var(--liquid-shadow), var(--liquid-inner-highlight), var(--liquid-inner-shade);
+}
+
+.dark-mode .glass-dock-app-icon-img {
+  background: rgba(0, 0, 0, 0.04);
+  border-color: var(--liquid-border-light-weak);
+}
+
+.dark-mode .glass-dock-container:hover {
+  background: var(--liquid-tint-light-strong);
+}
+
+@supports not ((-webkit-backdrop-filter: blur(1px)) or (backdrop-filter: blur(1px))) {
+  .glass-dock-container {
+    background: var(--ios-tertiary-system-background);
+  }
+
+  .glass-dock-container::before,
+  .glass-dock-container::after {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-transparency: reduce), (prefers-contrast: more) {
+  .glass-dock-container {
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    background: var(--ios-tertiary-system-background);
+    border-color: var(--ios-separator);
+    box-shadow: var(--shadow-medium);
+  }
+
+  .glass-dock-container::before,
+  .glass-dock-container::after {
+    display: none;
+  }
+}
+
+/* Animations */
+@keyframes dockGlassAppear {
+  from {
+    opacity: 0;
+    transform: translateX(-50%) translateY(20px) scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0px) scale(1);
+  }
+}
+
+/* Responsive adjustments */
+@media (max-width: 480px) {
+  .glass-dock-container {
+    padding: 3px 8px;
+    border-radius: 28px;
+  }
+  
+  .glass-dock-inner {
+    gap: 6px;
+  }
+  
+  .glass-dock-app-icon-img {
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+  }
+  
+  .glass-dock-app-icon-img img {
+    width: 40px;
+    height: 40px;
+    border-radius: 9px;
+  }
+
+  .glass-dock-app-icon-img.ios-icon-glass .ios-icon-svg {
+    width: 130%;
+    height: 130%;
+  }
+}
+
+/* Performance optimizations */
+.glass-dock * {
+  backface-visibility: hidden;
+  transform-style: preserve-3d;
+}
+
+/* Ensure the glass dock appears only in desktop mode */
+@media (max-width: 767px) {
+  .glass-dock {
+    display: none;
+  }
+}
+
+/* Hide original dock in desktop view to avoid conflicts */
+@media (min-width: 768px) {
+  .ios-dock {
+    display: none !important;
+  }
+}
