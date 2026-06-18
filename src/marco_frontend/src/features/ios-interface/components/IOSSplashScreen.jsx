@@ -98,7 +98,7 @@ const IOSSplashScreen = ({ onLoadComplete }) => {
             <div className="ios-splash-logo">
               <img 
                 src={logoImagePath} 
-                alt="Pepple Logo" 
+                alt="Marco Logo" 
                 className="apple-logo" 
                 style={{
                   maxWidth: '100%',

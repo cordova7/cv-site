@@ -54,10 +54,10 @@ cv-site/
 │   └── [...path]/page.tsx        # Catch-all (redirects to home)
 │
 ├── components/
-│   ├── PeppleIosHomeShell.tsx    # Shell: wallpaper, status bar, dock, widget
+│   ├── MarcoIosHomeShell.tsx    # Shell: wallpaper, status bar, dock, widget
 │   └── WallpaperShowcase.tsx     # Wallpaper carousel with reduced-motion support
 │
-├── src/pepple_frontend/src/     # Shared iOS UI components
+├── src/marco_frontend/src/     # Shared iOS UI components
 │   ├── features/ios-interface/   # Home, StatusBar, Splash, Dock, Notes, Photos, iPadFrame
 │   └── shared/components/        # FloatingWidget, Finder (with PDF/CSV/image viewers)
 │
@@ -86,10 +86,10 @@ All other assets (wallpapers, icons, portfolio images) are bundled in `public/` 
 
 | What | Where |
 |---|---|
-| CV text | `src/pepple_frontend/src/features/ios-interface/components/IOSNotes.jsx` → `defaultNotes` |
-| Finder files | `src/pepple_frontend/src/shared/components/Finder.jsx` → `fileSystem` |
-| Portfolio images | `src/pepple_frontend/src/features/ios-interface/components/IOSPhotos.jsx` → `DEFAULT_PROJECTS` |
-| Wallpapers | `components/PeppleIosHomeShell.tsx` → `WallpaperShowcase images` prop |
+| CV text | `src/marco_frontend/src/features/ios-interface/components/IOSNotes.jsx` → `defaultNotes` |
+| Finder files | `src/marco_frontend/src/shared/components/Finder.jsx` → `fileSystem` |
+| Portfolio images | `src/marco_frontend/src/features/ios-interface/components/IOSPhotos.jsx` → `DEFAULT_PROJECTS` |
+| Wallpapers | `components/MarcoIosHomeShell.tsx` → `WallpaperShowcase images` prop |
 
 ---
 

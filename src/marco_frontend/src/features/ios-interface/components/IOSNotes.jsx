@@ -26,8 +26,8 @@ const defaultNotes = [
   lastModified: new Date(Date.now() - index * 3600 * 1000).toISOString(),
 }));
 
-const STORAGE_KEY = 'peppleNotes';
-const META_KEY = 'peppleNotesMeta';
+const STORAGE_KEY = 'marcoNotes';
+const META_KEY = 'marcoNotesMeta';
 
 const normalizeNotes = (items) =>
   items.map((note, index) => {

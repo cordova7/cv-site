@@ -17,7 +17,7 @@ function getNextIndex(currentIndex: number, total: number) {
 
 export default function WallpaperShowcase({
   images,
-  storageKey = "pepple.wallpaperIndex.v1",
+  storageKey = "marco.wallpaperIndex.v1",
   introIntervalMs = 10_000,
   ambientIntervalMs = 180_000,
   introOncePerSession = true,
@@ -68,7 +68,7 @@ export default function WallpaperShowcase({
       // ignore
     }
 
-    window.dispatchEvent(new CustomEvent("pepple:wallpaper-changed", { detail: { index: activeIndex, url: src } }));
+    window.dispatchEvent(new CustomEvent("marco:wallpaper-changed", { detail: { index: activeIndex, url: src } }));
   }, [activeIndex, imagesNormalized, storageKey]);
 
   const shuffle = () => {
@@ -106,8 +106,8 @@ export default function WallpaperShowcase({
       shuffle();
     };
 
-    window.addEventListener("pepple:shuffle-wallpaper", handler as EventListener);
-    return () => window.removeEventListener("pepple:shuffle-wallpaper", handler as EventListener);
+    window.addEventListener("marco:shuffle-wallpaper", handler as EventListener);
+    return () => window.removeEventListener("marco:shuffle-wallpaper", handler as EventListener);
   }, [imagesNormalized]);
 
   const clearTimers = () => {
@@ -134,7 +134,7 @@ export default function WallpaperShowcase({
 
     if (prefersReducedMotion.current) return;
 
-    const sessionKey = "pepple.wallpaperIntro.v1";
+    const sessionKey = "marco.wallpaperIntro.v1";
     const introAlreadyShown = (() => {
       if (!introOncePerSession) return false;
       try {
@@ -188,17 +188,17 @@ export default function WallpaperShowcase({
   if (imagesNormalized.length === 0) return null;
 
   return (
-    <div className="pepple-wallpaper" aria-hidden="true">
-      <div className="pepple-wallpaper-stack">
+    <div className="marco-wallpaper" aria-hidden="true">
+      <div className="marco-wallpaper-stack">
         {imagesNormalized.map((src, index) => (
           <div
             key={src}
-            className={`pepple-wallpaper-layer${index === activeIndex ? " is-active" : ""}`}
+            className={`marco-wallpaper-layer${index === activeIndex ? " is-active" : ""}`}
             style={{ backgroundImage: `url('${src}')` }}
           />
         ))}
-        <div className="pepple-wallpaper-vignette" />
-        <div className="pepple-wallpaper-noise" />
+        <div className="marco-wallpaper-vignette" />
+        <div className="marco-wallpaper-noise" />
       </div>
     </div>
   );

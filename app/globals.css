@@ -22,7 +22,7 @@ a {
   color: inherit;
 }
 
-.pepple-loading-screen {
+.marco-loading-screen {
   position: fixed;
   inset: 0;
   display: grid;
@@ -31,7 +31,7 @@ a {
     radial-gradient(900px 600px at 80% 20%, rgba(56, 189, 248, 0.10), rgba(0, 0, 0, 0)), #0b0b0f;
 }
 
-.pepple-loading-card {
+.marco-loading-card {
   width: min(320px, calc(100vw - 48px));
   padding: 28px 24px 22px;
   border-radius: 22px;
@@ -45,20 +45,20 @@ a {
   gap: 16px;
 }
 
-.pepple-loading-logo {
+.marco-loading-logo {
   width: 110px;
   height: 110px;
   object-fit: contain;
   filter: drop-shadow(0 18px 28px rgba(0, 0, 0, 0.35));
 }
 
-.pepple-loading-spinner {
+.marco-loading-spinner {
   width: 32px;
   height: 32px;
   border-radius: 999px;
   border: 3px solid rgba(255, 255, 255, 0.20);
   border-top-color: rgba(255, 255, 255, 0.85);
-  animation: pepple-spin 0.9s linear infinite;
+  animation: marco-spin 0.9s linear infinite;
 }
 
 .app-route-loading {
@@ -74,35 +74,35 @@ a {
   border-radius: 999px;
   border: 3px solid rgba(255, 255, 255, 0.20);
   border-top-color: rgba(255, 255, 255, 0.85);
-  animation: pepple-spin 0.9s linear infinite;
+  animation: marco-spin 0.9s linear infinite;
 }
 
-@keyframes pepple-spin {
+@keyframes marco-spin {
   to {
     transform: rotate(360deg);
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .pepple-loading-spinner,
+  .marco-loading-spinner,
   .app-route-loading::before {
     animation: none;
   }
 }
 
-.pepple-wallpaper {
+.marco-wallpaper {
   position: absolute;
   inset: 0;
   z-index: 0;
   pointer-events: none;
 }
 
-.pepple-wallpaper-stack {
+.marco-wallpaper-stack {
   position: absolute;
   inset: 0;
 }
 
-.pepple-wallpaper-layer {
+.marco-wallpaper-layer {
   position: absolute;
   inset: -18px;
   background-size: cover;
@@ -114,19 +114,19 @@ a {
   filter: saturate(1.06) contrast(1.05);
 }
 
-.pepple-wallpaper-layer.is-active {
+.marco-wallpaper-layer.is-active {
   opacity: 1;
   transform: scale(1.10);
 }
 
-.pepple-wallpaper-vignette {
+.marco-wallpaper-vignette {
   position: absolute;
   inset: 0;
   background: radial-gradient(1200px 800px at 40% 10%, rgba(0, 0, 0, 0.15), rgba(0, 0, 0, 0.60)),
     linear-gradient(to bottom, rgba(0, 0, 0, 0.30), rgba(0, 0, 0, 0.26));
 }
 
-.pepple-wallpaper-noise {
+.marco-wallpaper-noise {
   position: absolute;
   inset: 0;
   opacity: 0.06;
@@ -134,16 +134,16 @@ a {
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='120' height='120' filter='url(%23n)' opacity='.45'/%3E%3C/svg%3E");
 }
 
-body.ipad-frame-mode .pepple-wallpaper-layer {
+body.ipad-frame-mode .marco-wallpaper-layer {
   filter: saturate(1.08) contrast(1.04) brightness(1.06);
 }
 
-body.ipad-frame-mode .pepple-wallpaper-vignette {
+body.ipad-frame-mode .marco-wallpaper-vignette {
   background: radial-gradient(1200px 800px at 40% 10%, rgba(0, 0, 0, 0.10), rgba(0, 0, 0, 0.42)),
     linear-gradient(to bottom, rgba(0, 0, 0, 0.18), rgba(0, 0, 0, 0.16));
 }
 
-.pepple-wallpaper-pill {
+.marco-wallpaper-pill {
   position: absolute;
   right: 14px;
   bottom: 14px;
@@ -161,12 +161,12 @@ body.ipad-frame-mode .pepple-wallpaper-vignette {
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
 }
 
-.pepple-wallpaper-pill:hover {
+.marco-wallpaper-pill:hover {
   background: rgba(0, 0, 0, 0.34);
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .pepple-wallpaper-layer {
+  .marco-wallpaper-layer {
     transition: none;
     transform: none;
   }

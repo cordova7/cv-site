@@ -101,7 +101,7 @@ export default function MarcoIosHomeShell() {
       return;
     }
     if (appId === "linkedin") {
-      window.open("https://www.linkedin.com/in/marco-cordova/", "_blank", "noopener,noreferrer");
+      window.open("https://www.linkedin.com/in/marco-cordova-116357321/", "_blank", "noopener,noreferrer");
       return;
     }
     if (appId === "github") {

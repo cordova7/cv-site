@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import Dock from './Dock';
 import IOSIcon from './IOSIcon';
 
-const FROGCHAN_UNLOCK_AT_KEY = 'pepple.frogchan.unlockAt.v1';
+const FROGCHAN_UNLOCK_AT_KEY = 'marco.frogchan.unlockAt.v1';
 
 const WALLPAPERS = ['yosemite.jpg', 'yosemite2.png', 'yosemite3.jpg', 'yosemite4.jpg'];
 
@@ -137,7 +137,7 @@ const IOSHome = ({ onAppSwitch }) => {
 
   useEffect(() => {
     try {
-      const storedIndex = Number.parseInt(window.localStorage.getItem('pepple.wallpaperIndex.v1') ?? '', 10);
+      const storedIndex = Number.parseInt(window.localStorage.getItem('marco.wallpaperIndex.v1') ?? '', 10);
       if (Number.isFinite(storedIndex) && storedIndex >= 0 && storedIndex < WALLPAPERS.length) {
         setCurrentBackground(WALLPAPERS[storedIndex]);
       }
@@ -157,8 +157,8 @@ const IOSHome = ({ onAppSwitch }) => {
       }
     };
 
-    window.addEventListener('pepple:wallpaper-changed', handler);
-    return () => window.removeEventListener('pepple:wallpaper-changed', handler);
+    window.addEventListener('marco:wallpaper-changed', handler);
+    return () => window.removeEventListener('marco:wallpaper-changed', handler);
   }, []);
 
   const handleTouchStart = (e) => {
@@ -318,11 +318,11 @@ const IOSHome = ({ onAppSwitch }) => {
     const currentIndex = WALLPAPERS.indexOf(currentBackground);
     const nextBackground = WALLPAPERS[(currentIndex + 1) % WALLPAPERS.length];
     setCurrentBackground(nextBackground);
-    window.dispatchEvent(new CustomEvent('pepple:shuffle-wallpaper', { detail: { background: nextBackground } }));
+    window.dispatchEvent(new CustomEvent('marco:shuffle-wallpaper', { detail: { background: nextBackground } }));
   };
 
   // Social-link apps (LinkedIn / Mail / Github) are wired up in
-  // PeppleIosHomeShell.onAppSwitch so they open external resources
+  // MarcoIosHomeShell.onAppSwitch so they open external resources
   // while keeping the iOS shell intact.
 
   const handleAppLaunch = (appId) => {

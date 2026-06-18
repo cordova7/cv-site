@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
 const clamp = (value, min, max) => Math.min(max, Math.max(min, value));
-const Z_INDEX_KEY = '__pepple_widget_zindex__';
+const Z_INDEX_KEY = '__marco_widget_zindex__';
 
 const getContainerMetrics = (container) => {
   if (!container) return null;
