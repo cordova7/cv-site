@@ -1,9 +1,9 @@
 import dynamic from "next/dynamic";
 
-const PeppleIosHomeShell = dynamic(() => import("../components/PeppleIosHomeShell"), {
+const MarcoIosHomeShell = dynamic(() => import("../components/MarcoIosHomeShell"), {
   ssr: false,
 });
 
 export default function HomePage() {
-  return <PeppleIosHomeShell />;
+  return <MarcoIosHomeShell />;
 }

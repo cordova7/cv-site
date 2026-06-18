@@ -1,12 +1,12 @@
-# Marco Cordova — CV
+# Marco Cordova CV
 
 **Live:** [marco-cordova.vercel.app](https://marco-cordova.vercel.app)
 
 An iOS-style portfolio site built with Next.js. Visitors land on a wallpaper carousel, see a live status bar, and can launch three apps from the glass dock:
 
-- **Finder** — file-browser over portfolio documents (CV PDF, experience CSV, roadmap image)
-- **CV** — the resume, rendered as a Notes-style app
-- **Portfolio** — an image grid styled like the iOS Photos app
+- **Finder**: file-browser over portfolio documents (CV PDF, experience CSV, roadmap image)
+- **CV**: the resume, rendered as a Notes-style app
+- **Portfolio**: an image grid styled like the iOS Photos app
 
 On desktop the whole experience is wrapped in an iPad frame. The dock is frosted glass, wallpapers cycle with `prefers-reduced-motion` respected, and the status bar shows the live local time.
 
@@ -18,6 +18,7 @@ On desktop the whole experience is wrapped in an iPad frame. The dock is frosted
 |---|---|
 | Framework | Next.js 14 (App Router) |
 | Language | TypeScript |
+| UI | React 18 |
 | Styling | CSS (no UI framework) |
 | Deployment | Vercel |
 

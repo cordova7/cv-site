@@ -12,10 +12,10 @@
 
 # generated files
 **/declarations/
-!src/pepple_frontend/declarations/
-!src/pepple_frontend/declarations/**
-!src/pepple_frontend/src/declarations/
-!src/pepple_frontend/src/declarations/**
+!src/marco_frontend/declarations/
+!src/marco_frontend/declarations/**
+!src/marco_frontend/src/declarations/
+!src/marco_frontend/src/declarations/**
 
 # rust
 target/
@@ -46,3 +46,9 @@ yarn-error.log*
 # screenshots / assets the maintainer adds (uncomment the line below
 # only if you don't want to commit any local screenshots)
 # assets/screenshots/
+
+.vercel
+
+# Reference copy of the upstream project — kept locally for diffing,
+# not part of this deployment.
+cv-site-main/

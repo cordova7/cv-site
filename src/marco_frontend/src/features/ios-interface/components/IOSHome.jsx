@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import Dock from './Dock';
 import IOSIcon from './IOSIcon';
-import PumpFunTokenWidget from './PumpFunTokenWidget';
 
 const FROGCHAN_UNLOCK_AT_KEY = 'pepple.frogchan.unlockAt.v1';
 
@@ -322,9 +321,9 @@ const IOSHome = ({ onAppSwitch }) => {
     window.dispatchEvent(new CustomEvent('pepple:shuffle-wallpaper', { detail: { background: nextBackground } }));
   };
 
-  // Personal-link redirects are intentionally removed from the public version
-  // of this repo. Wire them up in a local-only fork or via env-injected URLs
-  // before deploying. The app icons remain in the grid as visual placeholders.
+  // Social-link apps (LinkedIn / Mail / Github) are wired up in
+  // PeppleIosHomeShell.onAppSwitch so they open external resources
+  // while keeping the iOS shell intact.
 
   const handleAppLaunch = (appId) => {
     if (appId === 'switch-background') {
@@ -357,7 +356,7 @@ const IOSHome = ({ onAppSwitch }) => {
       color: '#0A66C2',
     },
     {
-      id: 'telegram',
+      id: 'mail',
       name: 'Mail',
       icon: '/assets/gmail-icon.png',
       color: 'transparent',
@@ -533,10 +532,6 @@ const IOSHome = ({ onAppSwitch }) => {
         {/* Page 1 */}
         {currentPage === 0 && (
           <>
-            <div className="ios-home-widgets">
-              <PumpFunTokenWidget />
-            </div>
-
             <div className="ios-app-grid">
               {apps.slice(0, 12).map(app => renderAppIcon(app))}
               {/* Fill remaining grid with blank spots if needed */}

@@ -36,7 +36,7 @@
   ],
   "exclude": [
     "node_modules",
-    "src/pepple_frontend",
+    "src/marco_frontend",
     "prysm"
   ]
 }

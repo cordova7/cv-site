@@ -1,12 +1,12 @@
 import type { ReactNode } from "react";
 import "./globals.css";
-import "../src/pepple_frontend/src/shared/styles/App.css";
-import "../src/pepple_frontend/src/features/ios-interface/styles/Home.css";
-import "../src/pepple_frontend/src/features/ios-interface/styles/Dock.css";
-import "../src/pepple_frontend/src/features/ios-interface/styles/GlassDock.css";
-import "../src/pepple_frontend/src/features/ios-interface/styles/IOSPhotos.css";
-import "../src/pepple_frontend/src/css/IPadFrame.css";
-import "../src/pepple_frontend/src/css/Finder.css";
+import "../src/marco_frontend/src/shared/styles/App.css";
+import "../src/marco_frontend/src/features/ios-interface/styles/Home.css";
+import "../src/marco_frontend/src/features/ios-interface/styles/Dock.css";
+import "../src/marco_frontend/src/features/ios-interface/styles/GlassDock.css";
+import "../src/marco_frontend/src/features/ios-interface/styles/IOSPhotos.css";
+import "../src/marco_frontend/src/css/IPadFrame.css";
+import "../src/marco_frontend/src/css/Finder.css";
 
 export const viewport = {
   width: 'device-width',

@@ -2,24 +2,24 @@
 
 import React, { Suspense, useEffect, useMemo, useState } from "react";
 
-import IOSHome from "../src/pepple_frontend/src/features/ios-interface/components/IOSHome.jsx";
-import IOSStatusBar from "../src/pepple_frontend/src/features/ios-interface/components/IOSStatusBar.jsx";
-import IOSSplashScreen from "../src/pepple_frontend/src/features/ios-interface/components/IOSSplashScreen.jsx";
-import IPadFrame from "../src/pepple_frontend/src/features/ios-interface/components/IPadFrame.jsx";
-import GlassDock from "../src/pepple_frontend/src/features/ios-interface/components/GlassDock.jsx";
-import FloatingWidget from "../src/pepple_frontend/src/shared/components/FloatingWidget.jsx";
+import IOSHome from "../src/marco_frontend/src/features/ios-interface/components/IOSHome.jsx";
+import IOSStatusBar from "../src/marco_frontend/src/features/ios-interface/components/IOSStatusBar.jsx";
+import IOSSplashScreen from "../src/marco_frontend/src/features/ios-interface/components/IOSSplashScreen.jsx";
+import IPadFrame from "../src/marco_frontend/src/features/ios-interface/components/IPadFrame.jsx";
+import GlassDock from "../src/marco_frontend/src/features/ios-interface/components/GlassDock.jsx";
+import FloatingWidget from "../src/marco_frontend/src/shared/components/FloatingWidget.jsx";
 import WallpaperShowcase from "./WallpaperShowcase";
 
-const Finder = React.lazy(() => import("../src/pepple_frontend/src/shared/components/Finder.jsx"));
-const IOSNotes = React.lazy(() => import("../src/pepple_frontend/src/features/ios-interface/components/IOSNotes.jsx"));
-const IOSPhotos = React.lazy(() => import("../src/pepple_frontend/src/features/ios-interface/components/IOSPhotos.jsx"));
+const Finder = React.lazy(() => import("../src/marco_frontend/src/shared/components/Finder.jsx"));
+const IOSNotes = React.lazy(() => import("../src/marco_frontend/src/features/ios-interface/components/IOSNotes.jsx"));
+const IOSPhotos = React.lazy(() => import("../src/marco_frontend/src/features/ios-interface/components/IOSPhotos.jsx"));
 
 function getDesktopMode() {
   const hasFinePointer = typeof window.matchMedia === "function" ? window.matchMedia("(pointer: fine)").matches : false;
   return window.innerWidth >= 1024 && hasFinePointer;
 }
 
-export default function PeppleIosHomeShell() {
+export default function MarcoIosHomeShell() {
   const [currentTime, setCurrentTime] = useState("");
   const [isDesktop, setIsDesktop] = useState(false);
   const [activeWidget, setActiveWidget] = useState<string | null>(null);
@@ -71,8 +71,8 @@ export default function PeppleIosHomeShell() {
       "/assets/yosemite4.jpg",
     ]);
 
-    void import("../src/pepple_frontend/src/shared/components/Finder.jsx");
-    void import("../src/pepple_frontend/src/features/ios-interface/components/IOSPhotos.jsx");
+    void import("../src/marco_frontend/src/shared/components/Finder.jsx");
+    void import("../src/marco_frontend/src/features/ios-interface/components/IOSPhotos.jsx");
   }, []);
 
   useEffect(() => {
@@ -98,6 +98,19 @@ export default function PeppleIosHomeShell() {
     }
     if (["finder", "notes", "memes"].includes(appId)) {
       setActiveWidget(appId);
+      return;
+    }
+    if (appId === "linkedin") {
+      window.open("https://www.linkedin.com/in/marco-cordova/", "_blank", "noopener,noreferrer");
+      return;
+    }
+    if (appId === "github") {
+      window.open("https://github.com/cordova7", "_blank", "noopener,noreferrer");
+      return;
+    }
+    if (appId === "mail") {
+      window.location.href = "mailto:marco7cordova@gmail.com";
+      return;
     }
   };
 
