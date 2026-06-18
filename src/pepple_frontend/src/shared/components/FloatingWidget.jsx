@@ -187,7 +187,7 @@ const FloatingWidget = ({
       <div className="floating-widget-drag-handle" onPointerDown={handlePointerDown} role="presentation">
         <img
           className="floating-widget-logo"
-          src="/assets/window-logo.png"
+          src="/assets/logo.png"
           alt=""
           aria-hidden="true"
           width="24"

@@ -21,7 +21,7 @@ const IOSStatusBar = ({ time, title }) => {
           <div className="ios-signal-bar"></div>
         </div>
         
-        <img className="ios-status-bar-solana" src="/assets/mc-logo-white.png" alt="MC" />
+
 
         <div className="ios-status-bar-battery">
           <div className="ios-status-bar-battery-level"></div>

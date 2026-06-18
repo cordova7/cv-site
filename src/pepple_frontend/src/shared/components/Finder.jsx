@@ -1,13 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import '../../css/Finder.css';
+import PDFViewer from './viewers/PDFViewer.jsx';
+import ImageViewer from './viewers/ImageViewer.jsx';
+import CSVViewer from './viewers/CSVViewer.jsx';
 
-// In-app PDF / image / CSV previews are intentionally stubbed in the public
-// version of this repo. The Finder still browses the file system; selecting a
-// file opens it in a new tab so visitors can see the underlying asset directly.
-const openInNewTab = (path) => {
-  if (typeof window === 'undefined') return;
-  window.open(path, '_blank', 'noopener,noreferrer');
-};
 
 const fileSystem = {
   Resume: {
@@ -65,11 +61,31 @@ const Finder = () => {
 
   if (isMobile) {
     return (
-      <div className="finder-mobile-placeholder">
-        <p>The Finder is desktop-only in this build.</p>
-        <button type="button" onClick={() => openInNewTab('/assets/docs/cv.pdf')}>
-          Open CV
-        </button>
+      <div className="finder-widget-shell">
+        <div className="finder-container">
+          <div className="finder-toolbar">
+            <div className="finder-toolbar-left">
+              <button className="finder-toolbar-button" onClick={handleHome}>Home</button>
+            </div>
+          </div>
+          <div className="finder-content">
+            <div className="folder-content grid-view">
+              {Object.entries(fileSystem).map(([name, folder]) => (
+                <div
+                  key={name}
+                  className="finder-item"
+                  onClick={() => { setCurrentPath([name]); setSelectedFile(null); setSearchQuery(''); }}
+                >
+                  <img src="/assets/icons/folder-icon.png" alt={name} className="finder-icon" width="52" height="52" loading="eager" decoding="async" />
+                  <div className="finder-item-text">
+                    <span className="finder-name">{name}</span>
+                    <span className="finder-item-meta">{Object.keys(folder.contents || {}).length} items</span>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
       </div>
     );
   }
@@ -77,18 +93,19 @@ const Finder = () => {
   const renderFileViewer = () => {
     if (!selectedFile) return null;
 
-    // Public-build shortcut: open the file in a new tab. Recruiters who want
-    // a richer preview can host a build with the full viewer suite.
-    return (
-      <div className="finder-preview-stub">
-        <p>
-          <strong>{selectedFile.name || selectedFile.path}</strong>
-        </p>
-        <button type="button" onClick={() => openInNewTab(selectedFile.path)}>
-          Open in new tab
-        </button>
-      </div>
-    );
+    const fileType = selectedFile.type;
+    const filePath = selectedFile.path;
+
+    switch (fileType) {
+      case 'pdf':
+        return <PDFViewer file={filePath} />;
+      case 'image':
+        return <ImageViewer file={filePath} />;
+      case 'csv':
+        return <CSVViewer file={filePath} />;
+      default:
+        return null;
+    }
   };
 
   const getFolderContent = () => {

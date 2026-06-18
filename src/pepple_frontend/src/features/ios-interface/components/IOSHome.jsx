@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import Dock from './Dock';
 import IOSIcon from './IOSIcon';
+import PumpFunTokenWidget from './PumpFunTokenWidget';
 
 const FROGCHAN_UNLOCK_AT_KEY = 'pepple.frogchan.unlockAt.v1';
 
@@ -532,6 +533,10 @@ const IOSHome = ({ onAppSwitch }) => {
         {/* Page 1 */}
         {currentPage === 0 && (
           <>
+            <div className="ios-home-widgets">
+              <PumpFunTokenWidget />
+            </div>
+
             <div className="ios-app-grid">
               {apps.slice(0, 12).map(app => renderAppIcon(app))}
               {/* Fill remaining grid with blank spots if needed */}
