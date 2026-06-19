@@ -32,14 +32,14 @@ const DEFAULT_PROJECTS = [
   {
     id: 'project-2',
     title: 'On-chain Analytics',
-    image: '/assets/memes-app/meme2.png',
+    image: '/assets/memes-app/project2.png',
     codeUrl: '/projects/onchain-analytics.txt',
     codeLanguage: 'txt',
   },
   {
     id: 'project-3',
     title: 'Frontend Dashboard',
-    image: '/assets/memes-app/meme3.png',
+    image: '/assets/memes-app/project3.png',
     code: `// Add your project files here\nconst app = {\n  name: 'Dashboard',\n};\n`,
     codeLanguage: 'js',
   },
