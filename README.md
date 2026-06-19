@@ -4,10 +4,10 @@
 
 An iOS-style portfolio site built with Next.js. Visitors land on a wallpaper carousel, see a live status bar, and can launch four apps from the glass dock:
 
-- **Finder** — file browser over portfolio documents (CV PDF, experience, roadmap)
-- **Audio** — music player with configurable track list
-- **Portfolio** — GitHub project showcase with live star counts and screenshots
-- **CV** — resume rendered as an iOS Notes-style app
+- **Finder** - file browser over portfolio documents (CV PDF, experience, roadmap)
+- **Audio** - music player with configurable track list
+- **Portfolio** - GitHub project showcase with live star counts and screenshots
+- **CV** - resume rendered as an iOS Notes-style app
 
 On desktop the experience is wrapped in an iPad frame. The dock is frosted glass, wallpapers cycle with `prefers-reduced-motion` respected, and the status bar shows the live local time.
 
