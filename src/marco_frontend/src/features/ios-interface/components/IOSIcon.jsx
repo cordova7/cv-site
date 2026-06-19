@@ -120,6 +120,13 @@ const ICONS = {
       { tag: 'path', props: { d: 'm19 14 .7 1.9L22 17l-2.3.8L19 20l-.7-2.2L16 17l2.3-.8z' } },
     ],
   },
+  'music-note': {
+    nodes: [
+      { tag: 'path', props: { d: 'M9 18V5l12-2v13' } },
+      { tag: 'circle', props: { cx: 6, cy: 18, r: 3 } },
+      { tag: 'circle', props: { cx: 18, cy: 16, r: 3 } },
+    ],
+  },
 };
 
 const IOSIcon = ({ name, className = '', strokeWidth = 1.6 }) => {

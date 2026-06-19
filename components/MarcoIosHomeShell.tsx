@@ -13,6 +13,7 @@ import WallpaperShowcase from "./WallpaperShowcase";
 const Finder = React.lazy(() => import("../src/marco_frontend/src/shared/components/Finder.jsx"));
 const IOSNotes = React.lazy(() => import("../src/marco_frontend/src/features/ios-interface/components/IOSNotes.jsx"));
 const IOSPhotos = React.lazy(() => import("../src/marco_frontend/src/features/ios-interface/components/IOSPhotos.jsx"));
+const AudioShowcaseWidget = React.lazy(() => import("../src/marco_frontend/src/features/ios-interface/components/AudioShowcaseWidget.jsx"));
 
 function getDesktopMode() {
   const hasFinePointer = typeof window.matchMedia === "function" ? window.matchMedia("(pointer: fine)").matches : false;
@@ -134,6 +135,8 @@ export default function MarcoIosHomeShell() {
         return { title: "CV", Component: IOSNotes as unknown as React.ComponentType<any> };
       case "memes":
         return { title: "Portfolio", Component: IOSPhotos as unknown as React.ComponentType<any> };
+      case "audio":
+        return { title: "Audio", Component: AudioShowcaseWidget as unknown as React.ComponentType<any> };
       default:
         return null;
     }
