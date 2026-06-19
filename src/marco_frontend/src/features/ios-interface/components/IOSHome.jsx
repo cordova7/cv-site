@@ -13,9 +13,6 @@ const IOSHome = ({ onAppSwitch }) => {
     typeof window !== 'undefined' ? window.innerWidth <= 767 : false
   );
   const [currentBackground, setCurrentBackground] = useState('yosemite.jpg');
-  const toastTimerRef = useRef(0);
-  const [toastMessage, setToastMessage] = useState('');
-  const [toastOpen, setToastOpen] = useState(false);
   const [dragState, setDragState] = useState({
     isDragging: false,
     startX: 0,
@@ -24,13 +21,10 @@ const IOSHome = ({ onAppSwitch }) => {
     currentY: 0,
     isTouch: false
   });
-  
   const homeRef = useRef(null);
   const animationRef = useRef(null);
   const backgroundTapCandidateRef = useRef(false);
   const backgroundTapMovedRef = useRef(false);
-
-  // Listen for dark mode changes
   useEffect(() => {
     const checkDarkMode = () => {
       setIsDarkMode(document.body.classList.contains('dark-mode'));
@@ -66,31 +60,6 @@ const IOSHome = ({ onAppSwitch }) => {
     return () => {
       window.removeEventListener('resize', checkMobile);
     };
-  }, []);
-
-  useEffect(() => {
-    if (typeof window === 'undefined') return;
-    if (frogchanUnlockAt === 0) { // Only set the unlock time if it hasn't been set before
-      const storedUnlockAt = window.localStorage.getItem(FROGCHAN_UNLOCK_AT_KEY);
-      if (storedUnlockAt) {
-        // Use the previously stored unlock time
-        const parsedUnlockAt = Number.parseInt(storedUnlockAt, 10);
-        if (Number.isFinite(parsedUnlockAt)) {
-          setFrogchanUnlockAt(parsedUnlockAt);
-        } else {
-          // If stored value is invalid, set a new 24-hour lock from now
-          const unlockAt = Date.now() + 24 * 60 * 60 * 1000;
-          window.localStorage.setItem(FROGCHAN_UNLOCK_AT_KEY, String(unlockAt));
-          setFrogchanUnlockAt(unlockAt);
-        }
-      } else {
-        // First time access - set 24-hour lock from now
-        const unlockAt = Date.now() + 24 * 60 * 60 * 1000;
-        window.localStorage.setItem(FROGCHAN_UNLOCK_AT_KEY, String(unlockAt));
-        setFrogchanUnlockAt(unlockAt);
-      }
-    }
-    return () => window.clearTimeout(toastTimerRef.current);
   }, []);
 
   // Routing is no longer used; keep the UI fully home-screen driven.
@@ -372,11 +341,6 @@ const IOSHome = ({ onAppSwitch }) => {
       onMouseUp={handleDragEnd}
       onMouseLeave={handleDragEnd}
     >
-      <div className="ios-home-toast-layer" aria-hidden="true">
-        <div className="liquid-toast" data-state={toastOpen ? 'open' : 'closed'}>
-          {toastMessage}
-        </div>
-      </div>
       {/* Home screen content */}
       <div className="ios-home-content">
         {/* Page 1 */}
