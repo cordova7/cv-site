@@ -309,7 +309,6 @@ html, body {
   display: flex;
   flex-direction: column;
   background-color: var(--ios-system-background);
-  background-image: url('/assets/background.jpg');
   background-size: cover;
   background-position: center;
   position: relative;
@@ -798,14 +797,6 @@ html[data-widget-dragging="true"] .ios-home-indicator {
 /* App icons in tab bar */
 .files-icon {
   background-image: url('/assets/finder-icon.png');
-}
-
-.safari-icon {
-  background-image: url('/assets/safari-icon.png');
-}
-
-.notes-icon {
-  background-image: url('/assets/notes-icon.png');
 }
 
 .settings-icon {
