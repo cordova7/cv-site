@@ -29,7 +29,7 @@ const PROJECTS = [
     description:
       'A faithful recreation of the TempleOS desktop environment in the browser. Renders the classic 640x480 16-color display with HolyC terminal, interactive windows, and keyboard-driven navigation.',
     screenshot: '/assets/portfolio-projects/templeos-screenshot.png',
-    liveUrl: 'https://temple-os-tribute-icp.vercel.app',
+    liveUrl: 'https://bk6c3-6qaaa-aaaal-qdhga-cai.icp0.io/',
     githubUrl: 'https://github.com/cordova7/temple-os-tribute-icp',
     language: 'HTML/CSS/JS',
     languageColor: '#e34c26',
