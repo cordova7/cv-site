@@ -19,10 +19,11 @@ const AudioShowcaseWidget = ({ onClose }) => {
   const sourceRef = useRef(null);
   const rafRef = useRef(null);
   const widgetRef = useRef(null);
+  const containerRectRef = useRef(null);
   const dragState = useRef({ active: false, originX: 0, originY: 0, startX: 0, startY: 0 });
   const [widgetPos, setWidgetPos] = useState(() => ({
-    x: typeof window !== 'undefined' ? window.innerWidth * 0.72 : 600,
-    y: typeof window !== 'undefined' ? window.innerHeight * 0.22 : 180,
+    x: 60,
+    y: 120,
   }));
   const [zIndex, setZIndex] = useState(9995);
   const Z_INDEX_KEY = '__marco_audio_zindex__';
@@ -94,6 +95,19 @@ const AudioShowcaseWidget = ({ onClose }) => {
     setZIndex(next);
   }, []);
 
+  const resolveContainer = useCallback(() => {
+    const widgetEl = widgetRef.current;
+    const container =
+      widgetEl?.offsetParent ||
+      widgetEl?.closest('.app') ||
+      document.querySelector('.app') ||
+      document.body;
+    const rect = container.getBoundingClientRect();
+    if (rect.width <= 0 || rect.height <= 0) return null;
+    containerRectRef.current = rect;
+    return rect;
+  }, []);
+
   const handlePointerUp = useCallback(() => {
     dragState.current.active = false;
     widgetRef.current?.removeAttribute('data-dragging');
@@ -104,14 +118,25 @@ const AudioShowcaseWidget = ({ onClose }) => {
 
   const handlePointerMove = useCallback((event) => {
     if (!dragState.current.active) return;
-    setWidgetPos(prev => ({
-      x: clamp(event.clientX - dragState.current.startX, 20, (window.innerWidth || 800) - 320),
-      y: clamp(event.clientY - dragState.current.startY, 20, (window.innerHeight || 600) - 420),
-    }));
+    const bounds = containerRectRef.current;
+    const widgetEl = widgetRef.current;
+    const widgetW = widgetEl?.offsetWidth ?? 360;
+    const widgetH = widgetEl?.offsetHeight ?? 260;
+    if (!bounds) return;
+    const padding = 10;
+    const minX = bounds.left + padding;
+    const maxX = bounds.left + bounds.width - widgetW - padding;
+    const minY = bounds.top + padding;
+    const maxY = bounds.top + bounds.height - widgetH - padding;
+    setWidgetPos({
+      x: clamp(event.clientX - dragState.current.startX, minX, Math.max(minX, maxX)),
+      y: clamp(event.clientY - dragState.current.startY, minY, Math.max(minY, maxY)),
+    });
   }, []);
 
   const handleDragPointerDown = useCallback((event) => {
     if (event.button !== 0) return;
+    resolveContainer();
     event.preventDefault();
     event.stopPropagation();
     bringToFront();
@@ -126,15 +151,26 @@ const AudioShowcaseWidget = ({ onClose }) => {
     };
     window.addEventListener('pointermove', handlePointerMove);
     window.addEventListener('pointerup', handlePointerUp);
-  }, [widgetPos, handlePointerMove, handlePointerUp, bringToFront]);
+  }, [widgetPos, handlePointerMove, handlePointerUp, bringToFront, resolveContainer]);
 
   useEffect(() => {
+    const r = resolveContainer();
+    if (r) {
+      // Position widget in the top-left area of the iPad frame container
+      setWidgetPos({
+        x: r.left + r.width * 0.06,
+        y: r.top + r.height * 0.12,
+      });
+    }
+    const onResize = () => resolveContainer();
+    window.addEventListener('resize', onResize);
     return () => {
+      window.removeEventListener('resize', onResize);
       window.removeEventListener('pointermove', handlePointerMove);
       window.removeEventListener('pointerup', handlePointerUp);
       cancelAnimationFrame(rafRef.current);
     };
-  }, [handlePointerMove, handlePointerUp]);
+  }, [handlePointerMove, handlePointerUp, resolveContainer]);
 
   // ── Track navigation ──────────────────────────────────────────────────────
 
@@ -214,6 +250,9 @@ const AudioShowcaseWidget = ({ onClose }) => {
     zIndex,
     cursor: 'default',
     userSelect: 'none',
+    width: 'min(360px, calc(100vw - 32px))',
+    maxWidth: '360px',
+    boxSizing: 'border-box',
   }), [widgetPos, zIndex]);
 
   return (
