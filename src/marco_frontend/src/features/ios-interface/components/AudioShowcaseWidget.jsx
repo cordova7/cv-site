@@ -331,11 +331,6 @@ const AudioShowcaseWidget = ({ onClose }) => {
         <div className="ios-music-meta">
           <div className="ios-music-title-row">
             <span className="ios-music-title">{currentTrack?.title || 'No track'}</span>
-            <span
-              className={`ios-music-dot ios-music-dot-${currentTrack ? (isPlaying ? 'on' : 'off') : 'empty'}`}
-              aria-label={currentTrack ? (isPlaying ? 'Playing' : 'Paused') : 'Empty'}
-              title={currentTrack ? (isPlaying ? 'Playing' : 'Paused') : 'Empty'}
-            />
           </div>
           <span className="ios-music-artist" title={trackLabel}>
             {currentTrack?.artist || 'Add tracks in config/audioTracks.js'}
