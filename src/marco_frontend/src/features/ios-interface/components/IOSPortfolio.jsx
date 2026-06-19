@@ -14,7 +14,7 @@ const PROJECTS = [
     description:
       'ICPSwap aggregator frontend with real-time blockchain indexer and token routing canister. Features portfolio tracking, rewards, and multi-token support.',
     screenshot: '/assets/portfolio-projects/prysm-screenshot.png',
-    liveUrl: 'https://prysm-cc.vercel.app',
+    liveUrl: 'https://www.prysm.cc/',
     githubUrl: 'https://github.com/cordova7/prysm',
     language: 'TypeScript',
     languageColor: '#3178c6',
