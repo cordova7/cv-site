@@ -1,14 +1,15 @@
 # Marco Cordova CV
 
-**Live:** [marco-cordova.vercel.app](https://marco-cordova.vercel.app)
+**Live:** https://marco-cordova.vercel.app
 
-An iOS-style portfolio site built with Next.js. Visitors land on a wallpaper carousel, see a live status bar, and can launch three apps from the glass dock:
+An iOS-style portfolio site built with Next.js. Visitors land on a wallpaper carousel, see a live status bar, and can launch four apps from the glass dock:
 
-- **Finder**: file-browser over portfolio documents (CV PDF, experience CSV, roadmap image)
-- **CV**: the resume, rendered as a Notes-style app
-- **Portfolio**: an image grid styled like the iOS Photos app
+- **Finder** — file browser over portfolio documents (CV PDF, experience, roadmap)
+- **Audio** — music player with configurable track list
+- **Portfolio** — GitHub project showcase with live star counts and screenshots
+- **CV** — resume rendered as an iOS Notes-style app
 
-On desktop the whole experience is wrapped in an iPad frame. The dock is frosted glass, wallpapers cycle with `prefers-reduced-motion` respected, and the status bar shows the live local time.
+On desktop the experience is wrapped in an iPad frame. The dock is frosted glass, wallpapers cycle with `prefers-reduced-motion` respected, and the status bar shows the live local time.
 
 ---
 
@@ -57,28 +58,27 @@ cv-site/
 │   ├── MarcoIosHomeShell.tsx    # Shell: wallpaper, status bar, dock, widget
 │   └── WallpaperShowcase.tsx     # Wallpaper carousel with reduced-motion support
 │
-├── src/marco_frontend/src/     # Shared iOS UI components
-│   ├── features/ios-interface/   # Home, StatusBar, Splash, Dock, Notes, Photos, iPadFrame
-│   └── shared/components/        # FloatingWidget, Finder (with PDF/CSV/image viewers)
+├── src/marco_frontend/src/     # iOS UI components
+│   ├── features/ios-interface/   # Home, StatusBar, Splash, Dock, Notes, Portfolio
+│   ├── shared/components/        # FloatingWidget, Finder (PDF/CSV/image viewers)
+│   └── config/audioTracks.js     # Audio widget track list
 │
 └── public/assets/
-    ├── icons/                    # Finder file-type icons
-    ├── docs/                     # cv.pdf, stack-experience.csv, roadmap.png
-    ├── memes-app/                # Portfolio images
-    └── yosemite*.jpg/png          # Wallpaper carousel images
+    ├── portfolio-projects/        # Project screenshots for Portfolio app
+    ├── docs/                      # CV PDF, experience CSV, roadmap PNG
+    ├── icons/                     # Finder file-type icons
+    └── yosemite*.jpg/png           # Wallpaper carousel images
 ```
 
 ---
 
 ## Configuration
 
-Only one environment variable is required:
+One environment variable is required:
 
 ```env
 NEXT_PUBLIC_CV_NAME=Marco Cordova
 ```
-
-All other assets (wallpapers, icons, portfolio images) are bundled in `public/` and require no configuration.
 
 ---
 
@@ -88,7 +88,8 @@ All other assets (wallpapers, icons, portfolio images) are bundled in `public/` 
 |---|---|
 | CV text | `src/marco_frontend/src/features/ios-interface/components/IOSNotes.jsx` → `defaultNotes` |
 | Finder files | `src/marco_frontend/src/shared/components/Finder.jsx` → `fileSystem` |
-| Portfolio images | `src/marco_frontend/src/features/ios-interface/components/IOSPhotos.jsx` → `DEFAULT_PROJECTS` |
+| Portfolio projects | `src/marco_frontend/src/features/ios-interface/components/IOSPortfolio.jsx` → `PROJECTS` |
+| Audio tracks | `src/marco_frontend/src/features/ios-interface/config/audioTracks.js` |
 | Wallpapers | `components/MarcoIosHomeShell.tsx` → `WallpaperShowcase images` prop |
 
 ---
