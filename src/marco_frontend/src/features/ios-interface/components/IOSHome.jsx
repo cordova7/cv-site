@@ -277,7 +277,7 @@ const IOSHome = ({ onAppSwitch }) => {
   const dockApps = [
     { id: 'finder', name: 'Finder', icon: '/assets/finder-icon.png', color: 'transparent', noGlass: true },
     { id: 'audio', name: 'Audio', iconName: 'music-note', iconTint: '#FFFFFF', color: '#1DB954', noGlass: true },
-    { id: 'memes', name: 'Portfolio', icon: '/assets/portfolio-icon.png', color: 'transparent', noGlass: true },
+    { id: 'portfolio', name: 'Portfolio', icon: '/assets/portfolio-icon.png', color: 'transparent', noGlass: true },
     { id: 'notes', name: 'CV', iconName: 'file-text', iconTint: '#111827', color: '#FBBF24' },
     {
       id: 'switch-background',

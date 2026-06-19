@@ -12,7 +12,7 @@ import WallpaperShowcase from "./WallpaperShowcase";
 
 const Finder = React.lazy(() => import("../src/marco_frontend/src/shared/components/Finder.jsx"));
 const IOSNotes = React.lazy(() => import("../src/marco_frontend/src/features/ios-interface/components/IOSNotes.jsx"));
-const IOSPhotos = React.lazy(() => import("../src/marco_frontend/src/features/ios-interface/components/IOSPhotos.jsx"));
+const IOSPortfolio = React.lazy(() => import("../src/marco_frontend/src/features/ios-interface/components/IOSPortfolio.jsx"));
 const AudioShowcaseWidget = React.lazy(() => import("../src/marco_frontend/src/features/ios-interface/components/AudioShowcaseWidget.jsx"));
 
 function getDesktopMode() {
@@ -63,9 +63,8 @@ export default function MarcoIosHomeShell() {
       "/assets/icons/pdf-icon.png",
       "/assets/icons/image-icon.png",
       "/assets/icons/csv-icon.png",
-      "/assets/memes-app/project1.png",
-      "/assets/memes-app/project2.png",
-      "/assets/memes-app/project4.png",
+      "/assets/portfolio-projects/prysm-screenshot.png",
+      "/assets/portfolio-projects/templeos-screenshot.png",
       "/assets/yosemite.jpg",
       "/assets/yosemite2.png",
       "/assets/yosemite3.jpg",
@@ -73,7 +72,7 @@ export default function MarcoIosHomeShell() {
     ]);
 
     void import("../src/marco_frontend/src/shared/components/Finder.jsx");
-    void import("../src/marco_frontend/src/features/ios-interface/components/IOSPhotos.jsx");
+    void import("../src/marco_frontend/src/features/ios-interface/components/IOSPortfolio.jsx");
   }, []);
 
   useEffect(() => {
@@ -86,7 +85,8 @@ export default function MarcoIosHomeShell() {
   const glassDockApps = useMemo(
     () => [
       { id: "finder", name: "Finder", icon: "/assets/finder-icon.png", color: "transparent", noGlass: true },
-      { id: "memes", name: "Portfolio", icon: "/assets/portfolio-icon.png", color: "transparent", noGlass: true },
+      { id: "audio", name: "Audio", iconName: "music-note", iconTint: "#FFFFFF", color: "#1DB954", noGlass: true },
+      { id: "portfolio", name: "Portfolio", icon: "/assets/portfolio-icon.png", color: "transparent", noGlass: true },
       { id: "notes", name: "CV", iconName: "file-text", iconTint: "#111827", color: "#FBBF24" },
     ],
     [],
@@ -97,7 +97,7 @@ export default function MarcoIosHomeShell() {
       setActiveWidget(null);
       return;
     }
-    if (["finder", "notes", "memes"].includes(appId)) {
+    if (["finder", "notes", "portfolio", "audio"].includes(appId)) {
       setActiveWidget(appId);
       return;
     }
@@ -133,8 +133,8 @@ export default function MarcoIosHomeShell() {
         return { title: "Finder", Component: Finder as unknown as React.ComponentType<any> };
       case "notes":
         return { title: "CV", Component: IOSNotes as unknown as React.ComponentType<any> };
-      case "memes":
-        return { title: "Portfolio", Component: IOSPhotos as unknown as React.ComponentType<any> };
+      case "portfolio":
+        return { title: "Portfolio", Component: IOSPortfolio as unknown as React.ComponentType<any> };
       case "audio":
         return { title: "Audio", Component: AudioShowcaseWidget as unknown as React.ComponentType<any> };
       default:
