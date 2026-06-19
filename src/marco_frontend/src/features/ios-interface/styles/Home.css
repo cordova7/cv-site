@@ -577,14 +577,16 @@
 .ios-music-waves {
   display: flex;
   align-items: center;
-  gap: 2px;
-  height: 40px;
+  gap: 1.5px;
+  height: 36px;
   padding: 0 2px;
   flex-shrink: 0;
+  width: 72px;
+  overflow: hidden;
 }
 
 .ios-music-wave-bar {
-  width: 2.5px;
+  width: 2px;
   border-radius: 2px;
   transition: height 60ms linear, background 80ms linear;
   flex-shrink: 0;
