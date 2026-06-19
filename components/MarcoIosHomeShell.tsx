@@ -123,11 +123,15 @@ export default function MarcoIosHomeShell() {
     }
   }, []);
 
+  // Audio widget is self-contained (draggable + closeable) — no FloatingWidget wrapper
+  const isAudioWidget = activeWidget === "audio";
+
   const widgetConfig = useMemo<{
     title: string;
     Component: React.ComponentType<any>;
     props?: Record<string, unknown>;
   } | null>(() => {
+    if (isAudioWidget) return null;
     switch (activeWidget) {
       case "finder":
         return { title: "Finder", Component: Finder as unknown as React.ComponentType<any> };
@@ -135,12 +139,14 @@ export default function MarcoIosHomeShell() {
         return { title: "CV", Component: IOSNotes as unknown as React.ComponentType<any> };
       case "portfolio":
         return { title: "Portfolio", Component: IOSPortfolio as unknown as React.ComponentType<any> };
-      case "audio":
-        return { title: "Audio", Component: AudioShowcaseWidget as unknown as React.ComponentType<any> };
       default:
         return null;
     }
-  }, [activeWidget]);
+  }, [activeWidget, isAudioWidget]);
+
+  // Typed wrapper so TypeScript knows onClose is valid for this .jsx component
+  const AudioWidgetWrapper: React.ComponentType<{ onClose: () => void }> =
+    AudioShowcaseWidget as unknown as React.ComponentType<{ onClose: () => void }>;
 
   const appContent = (
     <div
@@ -162,6 +168,11 @@ export default function MarcoIosHomeShell() {
         <IOSHome onAppSwitch={onAppSwitch} />
       </div>
 
+       {isAudioWidget && (
+         <Suspense fallback={<div className="app-route-loading" aria-busy="true" aria-label="Loading" />}>
+          <AudioWidgetWrapper onClose={closeWidget} />
+         </Suspense>
+       )}
        {widgetConfig && (
          <FloatingWidget
            title={widgetConfig.title}

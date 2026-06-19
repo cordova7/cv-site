@@ -527,6 +527,60 @@
   white-space: nowrap;
 }
 
+.ios-music-drag-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+  position: relative;
+  z-index: 2;
+  padding: 2px 2px 0;
+  cursor: grab;
+}
+.ios-music-drag-row:active { cursor: grabbing; }
+
+.ios-music-drag-dots {
+  display: flex;
+  align-items: center;
+  padding: 4px 6px;
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.ios-music-close-btn {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(255, 80, 80, 0.75);
+  color: #fff;
+  font-size: 17px;
+  line-height: 1;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  padding: 0;
+  transition: background 150ms, transform 100ms;
+  flex-shrink: 0;
+}
+.ios-music-close-btn:hover { background: rgba(255, 60, 60, 0.95); transform: scale(1.1); }
+.ios-music-close-btn:active { transform: scale(0.94); }
+
+.ios-music-waves {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  height: 40px;
+  padding: 0 2px;
+}
+
+.ios-music-wave-bar {
+  width: 3px;
+  border-radius: 2px;
+  transition: height 60ms linear, background 80ms linear;
+  flex-shrink: 0;
+}
+
 .ios-music-audio {
   width: 36px;
   height: 20px;

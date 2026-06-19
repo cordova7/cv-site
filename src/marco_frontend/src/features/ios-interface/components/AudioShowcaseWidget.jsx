@@ -1,15 +1,31 @@
-import React, { useEffect, useMemo, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import audioTracks from '../config/audioTracks';
 
-const AudioShowcaseWidget = () => {
+const clamp = (v, min, max) => Math.min(max, Math.max(min, v));
+
+const AudioShowcaseWidget = ({ onClose }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [coverFailed, setCoverFailed] = useState(false);
   const [isPlaying, setIsPlaying] = useState(false);
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
   const [volumeLevel, setVolumeLevel] = useState('high');
+  const [waveData, setWaveData] = useState(new Uint8Array(32));
+
   const audioRef = useRef(null);
   const progressRef = useRef(null);
+  const analyserRef = useRef(null);
+  const audioCtxRef = useRef(null);
+  const sourceRef = useRef(null);
+  const rafRef = useRef(null);
+  const widgetRef = useRef(null);
+  const dragState = useRef({ active: false, originX: 0, originY: 0, startX: 0, startY: 0 });
+  const [widgetPos, setWidgetPos] = useState(() => ({
+    x: typeof window !== 'undefined' ? window.innerWidth * 0.72 : 600,
+    y: typeof window !== 'undefined' ? window.innerHeight * 0.22 : 180,
+  }));
+  const [zIndex, setZIndex] = useState(9995);
+  const Z_INDEX_KEY = '__marco_audio_zindex__';
 
   const currentTrack = audioTracks[currentIndex] || audioTracks[0] || null;
 
@@ -17,14 +33,119 @@ const AudioShowcaseWidget = () => {
     setCoverFailed(false);
   }, [currentTrack?.cover]);
 
+  // ── Web Audio API setup ────────────────────────────────────────────────────
+
+  const getAudioCtx = useCallback(() => {
+    if (!audioCtxRef.current) {
+      audioCtxRef.current = new (window.AudioContext || window.webkitAudioContext)();
+    }
+    return audioCtxRef.current;
+  }, []);
+
+  const connectAnalyser = useCallback(() => {
+    const audio = audioRef.current;
+    if (!audio || !audio.src) return;
+    const ctx = getAudioCtx();
+    if (ctx.state === 'suspended') ctx.resume();
+    if (!analyserRef.current) {
+      analyserRef.current = ctx.createAnalyser();
+      analyserRef.current.fftSize = 64;
+      analyserRef.current.smoothingTimeConstant = 0.8;
+    }
+    if (!sourceRef.current || sourceRef.current.context !== ctx) {
+      try { sourceRef.current?.disconnect(); } catch (_) {}
+      sourceRef.current = ctx.createMediaElementSource(audio);
+      sourceRef.current.connect(analyserRef.current);
+      analyserRef.current.connect(ctx.destination);
+    }
+  }, [getAudioCtx]);
+
+  // ── Animation loop: read analyser and update waveData ─────────────────────
+
+  useEffect(() => {
+    const tick = () => {
+      const analyser = analyserRef.current;
+      if (analyser) {
+        const data = new Uint8Array(analyser.frequencyBinCount);
+        analyser.getByteFrequencyData(data);
+        setWaveData(data);
+      }
+      if (isPlaying) rafRef.current = requestAnimationFrame(tick);
+    };
+    if (isPlaying) {
+      rafRef.current = requestAnimationFrame(tick);
+    } else {
+      cancelAnimationFrame(rafRef.current);
+      // decay wave gracefully when paused
+      setWaveData(prev => {
+        const next = new Uint8Array(prev.length);
+        for (let i = 0; i < prev.length; i++) next[i] = Math.max(0, prev[i] - 4);
+        return next;
+      });
+    }
+    return () => cancelAnimationFrame(rafRef.current);
+  }, [isPlaying]);
+
+  // ── Drag ─────────────────────────────────────────────────────────────────
+
+  const bringToFront = useCallback(() => {
+    const next = (window[Z_INDEX_KEY] || 9995) + 1;
+    window[Z_INDEX_KEY] = next;
+    setZIndex(next);
+  }, []);
+
+  const handlePointerUp = useCallback(() => {
+    dragState.current.active = false;
+    widgetRef.current?.removeAttribute('data-dragging');
+    document.documentElement.removeAttribute('data-widget-dragging');
+    window.removeEventListener('pointermove', handlePointerMove);
+    window.removeEventListener('pointerup', handlePointerUp);
+  }, []);
+
+  const handlePointerMove = useCallback((event) => {
+    if (!dragState.current.active) return;
+    setWidgetPos(prev => ({
+      x: clamp(event.clientX - dragState.current.startX, 20, (window.innerWidth || 800) - 320),
+      y: clamp(event.clientY - dragState.current.startY, 20, (window.innerHeight || 600) - 420),
+    }));
+  }, []);
+
+  const handleDragPointerDown = useCallback((event) => {
+    if (event.button !== 0) return;
+    event.preventDefault();
+    event.stopPropagation();
+    bringToFront();
+    widgetRef.current?.setAttribute('data-dragging', 'true');
+    document.documentElement.setAttribute('data-widget-dragging', 'true');
+    dragState.current = {
+      active: true,
+      originX: widgetPos.x,
+      originY: widgetPos.y,
+      startX: event.clientX - widgetPos.x,
+      startY: event.clientY - widgetPos.y,
+    };
+    window.addEventListener('pointermove', handlePointerMove);
+    window.addEventListener('pointerup', handlePointerUp);
+  }, [widgetPos, handlePointerMove, handlePointerUp, bringToFront]);
+
+  useEffect(() => {
+    return () => {
+      window.removeEventListener('pointermove', handlePointerMove);
+      window.removeEventListener('pointerup', handlePointerUp);
+      cancelAnimationFrame(rafRef.current);
+    };
+  }, [handlePointerMove, handlePointerUp]);
+
+  // ── Track navigation ──────────────────────────────────────────────────────
+
   const nextTrack = () => {
     if (!audioTracks.length) return;
-    setCurrentIndex((prev) => (prev + 1) % audioTracks.length);
+    setCurrentIndex(prev => (prev + 1) % audioTracks.length);
   };
 
   const prevTrack = () => {
     if (!audioTracks.length) return;
-    setCurrentIndex((prev) => (prev - 1 + audioTracks.length) % audioTracks.length);
+    setCurrentIndex(prev => (prev - 1 + audioTracks.length) % audioTracks.length);
   };
 
   const onEnded = () => nextTrack();
@@ -33,6 +154,7 @@ const AudioShowcaseWidget = () => {
     const audio = audioRef.current;
     if (!audio) return;
     if (audio.paused) {
+      connectAnalyser();
       audio.play?.();
     } else {
       audio.pause?.();
@@ -70,8 +192,64 @@ const AudioShowcaseWidget = () => {
     audio.currentTime = pct * duration;
   };
 
+  // ── Wave bars ─────────────────────────────────────────────────────────────
+
+  const BAR_COUNT = 32;
+  const bars = useMemo(() => {
+    const maxH = 40;
+    const minH = 3;
+    return Array.from({ length: BAR_COUNT }, (_, i) => {
+      const v = waveData[i] ?? 0;
+      const h = v === 0 ? minH : Math.max(minH, (v / 255) * maxH);
+      const hue = 140 + (i / BAR_COUNT) * 40;
+      const lightness = 50 + (v / 255) * 20;
+      return { h, hue, lightness };
+    });
+  }, [waveData]);
+
+  const widgetStyle = useMemo(() => ({
+    position: 'fixed',
+    left: `${widgetPos.x}px`,
+    top: `${widgetPos.y}px`,
+    zIndex,
+    cursor: 'default',
+    userSelect: 'none',
+  }), [widgetPos, zIndex]);
+
   return (
-    <div className="ios-token-widget ios-music-widget" role="group" aria-label="Audio showcase">
+    <div
+      ref={widgetRef}
+      className="ios-token-widget ios-music-widget"
+      style={widgetStyle}
+      role="group"
+      aria-label="Audio showcase"
+      onPointerDown={bringToFront}
+    >
+      {/* ── Drag handle + close ── */}
+      <div
+        className="ios-music-drag-row"
+        onPointerDown={handleDragPointerDown}
+        role="presentation"
+      >
+        <div className="ios-music-drag-dots" aria-hidden="true">
+          <svg viewBox="0 0 40 6" width="40" height="6" fill="none">
+            {[4, 14, 24, 34].map(cx => (
+              <circle key={cx} cx={cx} cy="3" r="1.5" fill="rgba(255,255,255,0.45)" />
+            ))}
+          </svg>
+        </div>
+        <button
+          className="ios-music-close-btn"
+          type="button"
+          onPointerDown={e => e.stopPropagation()}
+          onClick={onClose}
+          aria-label="Close audio player"
+        >
+          ×
+        </button>
+      </div>
+
+      {/* ── Header: cover + meta + waves ── */}
       <div className="ios-music-header">
         <div className="ios-music-cover" aria-hidden="true">
           {!coverFailed && currentTrack?.cover ? (
@@ -95,17 +273,23 @@ const AudioShowcaseWidget = () => {
             {currentTrack?.artist || 'Add tracks in config/audioTracks.js'}
           </span>
         </div>
-        <div className="ios-music-audio" aria-hidden="true">
-          <svg viewBox="0 0 24 16" role="presentation" focusable="false">
-            <rect x="1" y="7" width="2" height="8" rx="1" />
-            <rect x="6" y="3" width="2" height="12" rx="1" />
-            <rect x="11" y="1" width="2" height="14" rx="1" />
-            <rect x="16" y="5" width="2" height="10" rx="1" />
-            <rect x="21" y="8" width="2" height="7" rx="1" />
-          </svg>
+
+        {/* ── Live wave visualiser ── */}
+        <div className="ios-music-waves" aria-hidden="true">
+          {bars.map((bar, i) => (
+            <div
+              key={i}
+              className="ios-music-wave-bar"
+              style={{
+                height: `${bar.h}px`,
+                background: `hsl(${bar.hue}, 80%, ${bar.lightness}%)`,
+              }}
+            />
+          ))}
         </div>
       </div>
 
+      {/* ── Progress ── */}
       <div className="ios-music-progress">
         <div className="ios-music-time">{formatTime(currentTime)}</div>
         <button
@@ -122,6 +306,7 @@ const AudioShowcaseWidget = () => {
         <div className="ios-music-time">{remainingLabel}</div>
       </div>
 
+      {/* ── Controls ── */}
       <div className="ios-music-controls" aria-label="Player controls">
         <button className="ios-music-control" type="button" onClick={prevTrack} aria-label="Previous track">
           <svg viewBox="0 0 24 24" role="presentation" focusable="false">
@@ -152,7 +337,7 @@ const AudioShowcaseWidget = () => {
         <button
           className="ios-music-control ios-music-control-output"
           type="button"
-          onClick={() => setVolumeLevel((prev) => (prev === 'high' ? 'low' : 'high'))}
+          onClick={() => setVolumeLevel(prev => prev === 'high' ? 'low' : 'high')}
           aria-label={volumeLevel === 'high' ? 'Lower volume' : 'Raise volume'}
         >
           {volumeLevel === 'high' ? (
@@ -170,6 +355,7 @@ const AudioShowcaseWidget = () => {
         </button>
       </div>
 
+      {/* ── Audio element ── */}
       {currentTrack?.src ? (
         <audio
           ref={audioRef}
