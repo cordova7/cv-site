@@ -456,9 +456,9 @@
 
 .ios-music-header {
   display: grid;
-  grid-template-columns: auto 1fr auto;
+  grid-template-columns: auto minmax(0, 1fr) auto;
   align-items: center;
-  gap: 12px;
+  gap: 10px;
   position: relative;
   z-index: 1;
 }
@@ -580,10 +580,11 @@
   gap: 2px;
   height: 40px;
   padding: 0 2px;
+  flex-shrink: 0;
 }
 
 .ios-music-wave-bar {
-  width: 3px;
+  width: 2.5px;
   border-radius: 2px;
   transition: height 60ms linear, background 80ms linear;
   flex-shrink: 0;
