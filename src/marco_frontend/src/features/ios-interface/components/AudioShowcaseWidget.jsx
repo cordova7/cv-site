@@ -104,8 +104,15 @@ const AudioShowcaseWidget = ({ onClose }) => {
       document.body;
     const rect = container.getBoundingClientRect();
     if (rect.width <= 0 || rect.height <= 0) return null;
-    containerRectRef.current = rect;
-    return rect;
+    // Use the unscaled (layout) dimensions so drag bounds aren't
+    // shrunk by the iPad frame's CSS transform. FloatingWidget uses
+    // the same approach via getContainerMetrics.
+    const layoutWidth = container.clientWidth || container.offsetWidth || rect.width;
+    const layoutHeight = container.clientHeight || container.offsetHeight || rect.height;
+    const scaleX = layoutWidth ? rect.width / layoutWidth : 1;
+    const scaleY = layoutHeight ? rect.height / layoutHeight : 1;
+    containerRectRef.current = { rect, layoutWidth, layoutHeight, scaleX, scaleY };
+    return containerRectRef.current;
   }, []);
 
   const handlePointerUp = useCallback(() => {
@@ -123,31 +130,38 @@ const AudioShowcaseWidget = ({ onClose }) => {
     const widgetW = widgetEl?.offsetWidth ?? 360;
     const widgetH = widgetEl?.offsetHeight ?? 260;
     if (!bounds) return;
+    const layoutW = bounds.layoutWidth || bounds.width;
+    const layoutH = bounds.layoutHeight || bounds.height;
+    const scaleX = bounds.scaleX || 1;
+    const scaleY = bounds.scaleY || 1;
     const padding = 10;
-    const minX = bounds.left + padding;
-    const maxX = bounds.left + bounds.width - widgetW - padding;
-    const minY = bounds.top + padding;
-    const maxY = bounds.top + bounds.height - widgetH - padding;
+    // Convert client coords into unscaled (layout) coords
+    const localX = (event.clientX - bounds.rect.left) / scaleX;
+    const localY = (event.clientY - bounds.rect.top) / scaleY;
     setWidgetPos({
-      x: clamp(event.clientX - dragState.current.startX, minX, Math.max(minX, maxX)),
-      y: clamp(event.clientY - dragState.current.startY, minY, Math.max(minY, maxY)),
+      x: clamp(localX - dragState.current.startX, padding, Math.max(padding, layoutW - widgetW - padding)),
+      y: clamp(localY - dragState.current.startY, padding, Math.max(padding, layoutH - widgetH - padding)),
     });
   }, []);
 
   const handleDragPointerDown = useCallback((event) => {
     if (event.button !== 0) return;
-    resolveContainer();
+    const bounds = resolveContainer();
+    if (!bounds) return;
     event.preventDefault();
     event.stopPropagation();
     bringToFront();
     widgetRef.current?.setAttribute('data-dragging', 'true');
     document.documentElement.setAttribute('data-widget-dragging', 'true');
+    const scaleX = bounds.scaleX || 1;
+    const scaleY = bounds.scaleY || 1;
     dragState.current = {
       active: true,
       originX: widgetPos.x,
       originY: widgetPos.y,
-      startX: event.clientX - widgetPos.x,
-      startY: event.clientY - widgetPos.y,
+      // startX/startY are in unscaled (layout) coords matching what we write to style
+      startX: (event.clientX - bounds.rect.left) / scaleX - widgetPos.x,
+      startY: (event.clientY - bounds.rect.top) / scaleY - widgetPos.y,
     };
     window.addEventListener('pointermove', handlePointerMove);
     window.addEventListener('pointerup', handlePointerUp);
@@ -156,10 +170,12 @@ const AudioShowcaseWidget = ({ onClose }) => {
   useEffect(() => {
     const r = resolveContainer();
     if (r) {
-      // Position widget in the top-left area of the iPad frame container
+      // Position widget in the top-center of the iPad frame container
+      const layoutW = r.layoutWidth || r.width;
+      const layoutH = r.layoutHeight || r.height;
       setWidgetPos({
-        x: r.left + r.width * 0.06,
-        y: r.top + r.height * 0.12,
+        x: (layoutW - 360) / 2,
+        y: layoutH * 0.15,
       });
     }
     const onResize = () => resolveContainer();
@@ -255,6 +271,15 @@ const AudioShowcaseWidget = ({ onClose }) => {
     boxSizing: 'border-box',
   }), [widgetPos, zIndex]);
 
+  const handleWidgetPointerDown = useCallback((event) => {
+    // Only start drag if the user didn't click on an interactive element
+    if (event.button !== 0) return;
+    if (event.target.closest('button, input, [role="button"], audio, .ios-music-progress-bar, .ios-music-control, .ios-music-close-btn')) {
+      return;
+    }
+    handleDragPointerDown(event);
+  }, [handleDragPointerDown]);
+
   return (
     <div
       ref={widgetRef}
@@ -262,7 +287,7 @@ const AudioShowcaseWidget = ({ onClose }) => {
       style={widgetStyle}
       role="group"
       aria-label="Audio showcase"
-      onPointerDown={bringToFront}
+      onPointerDown={(e) => { bringToFront(); handleWidgetPointerDown(e); }}
     >
       {/* ── Drag handle + close ── */}
       <div
